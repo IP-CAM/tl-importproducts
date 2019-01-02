@@ -21,6 +21,10 @@ class ControllerCatalogProduct extends Controller {
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
 
+
+			echo '<pre>' . var_export($this->request->post, true) . '</pre>';
+			die();
+
 			$this->model_catalog_product->addProduct($this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
@@ -1327,7 +1331,7 @@ class ControllerCatalogProduct extends Controller {
 
 
 
-	    public function addproduct()
+	public function addproduct()
     {
 
 
@@ -1402,119 +1406,195 @@ class ControllerCatalogProduct extends Controller {
         //     ["product_layout"]=> array(1) {
         //                         [0]=> string(0) "" } }
 
-        // idioma español
-        $data["product_description"][2]["name"]         = "Producto 18DIC 1714";
-        $data["product_description"][2]["description"]  = "<p>toda la descripcion del producto</p>";
-        $data["product_description"][2]["meta_title"]   = "pepe";
-        $data["product_description"][2]["meta_description"]= "nombre del prod espaniol";
-        $data["product_description"][2]["meta_keyword"] = "nombre del prod espaniol";
-        $data["product_description"][2]["tag"]          = "nombre del prod espaniol";
 
-        // idioma ingles, lo agregamos para que no haya errores si editamos manualmente
-		$data["product_description"][1]["name"]         = "Producto 18DIC 1709";
-        $data["product_description"][1]["description"]  = "<p>toda la descripcion del producto</p>";
-        $data["product_description"][1]["meta_title"]   = "pepe";
-        $data["product_description"][1]["meta_description"]= "nombre del prod espaniol";
-        $data["product_description"][1]["meta_keyword"] = "nombre del prod espaniol";
-        $data["product_description"][1]["tag"]          = "nombre del prod espaniol";
-        // $data["product_description"][1]["name"]         = "nombre del prod englishhh";
-        // $data["product_description"][1]["description"]  = "<p>toda la descripcion english ucto</p>";
-        // $data["product_description"][1]["meta_title"]   = "pepe";
-        // $data["product_description"][1]["meta_description"]= "nombre del prod espaniol";
-        // $data["product_description"][1]["meta_keyword"] = "nombre del prod espaniol";
-        // $data["product_description"][1]["tag"]          = "nombre del prod espaniol";
+        // paso el .csv a un array
+		$products = array();
+		$cant_prod = 0;
+		if (($handle = fopen("/var/www/html/telas/docs/productos-telas.csv", "r")) !== FALSE)
+		{
+			while (($data = fgetcsv($handle, 1000, ",")) !== FALSE)
+			{
+				$num = count($data);
+				for ($c=0; $c < $num; $c++) {
+					$product[$c] = trim($data[$c]);
+				}
 
-		$data["model"]                       = "model pepe juampa";
-		$data["sku"]                         = "";
-		$data["upc"]                         = "";
-		$data["ean"]                         = "";
-		$data["jan"]                         = "";
-		$data["isbn"]                        = "";
-		$data["mpn"]                         = "";
-		$data["location"]                    = "";
-		$data["price"]                       = "450";
-		$data["tax_class_id"]                = "model_telas";
-		$data["quantity"]                    = "1";
-		$data["minimum"]                     = "1";
-		$data["subtract"]                    = "1";
-		$data["stock_status_id"]             = "6";
-		$data["shipping"]                    = "1";
-		$data["date_available"]              = "2018-12-10";
-		$data["length"]                      = "model_telas";
-		$data["width"]                       = "model_telas";
-		$data["height"]                      = "model_telas";
-		$data["length_class_id"]             = "1";
-		$data["weight"]                      = "model_telas";
-		$data["weight_class_id"]             = "model_telas";
-		$data["status"]                      = "1";
-		$data["sort_order"]                  = "model_telas";
-		$data["manufacturer"]                = "model_telas";
-		$data["manufacturer_id"]             = "model_telas";
-		$data["category"]                    = "model_telas";
-		$data["filter"]                      = "model_telas";
-		$data["product_store"][0]            = "0";
-		$data["download"]                    = "model_telas";
-		$data["related"]                     = "model_telas";
-		$data["option"]                      = "model_telas";
-		$data["image"]                       = "data/telas/12.jpg";
-		$data["points"]                      = "model_telas";
-		$data["product_reward"][1]["points"] = "0";
-		$data["product_seo_url"][0][2]       = "tela-corderoi-fina-" . rand(0,999999); // para los dos idiomas
-		$data["product_seo_url"][0][1]       = ""; // para los dos idiomas
-		$data["product_layout"][0]           = "";
-
-		$data['product_image'][0]['image'] = 'data/telas/12.jpg';
-		$data['product_image'][0]['sort_order'] = '0';
-		$data['product_image'][1]['image'] = 'data/telas/12.jpg';
-		$data['product_image'][1]['sort_order'] = '0';
-		$data['product_image'][2]['image'] = 'data/telas/12.jpg';
-		$data['product_image'][2]['sort_order'] = '0';
-		$data['product_image'][3]['image'] = 'data/telas/12.jpg';
-		$data['product_image'][3]['sort_order'] = '0';
-
-        // echo 'vamos a insertar el producto . .. ';
-        // die();
+				$all_products[$cant_prod] = $product;
+				$cant_prod++;
+			}
+			fclose($handle);
+		}
 
 
 
 
-        $this->load->language('catalog/product');
 
-        $this->document->setTitle($this->language->get('heading_title'));
+		foreach ($all_products as $k => $prod)
+		{
 
-        $this->load->model('catalog/product');
+	        // idioma español
+	        $data["product_description"][2]["name"]         = $prod[0];
+	        $data["product_description"][2]["description"]  = "<p>la vamos a ir formando nosotros</p>";
+	        $data["product_description"][2]["meta_title"]   = $prod[13];
+	        $data["product_description"][2]["meta_description"]= $prod[14];
+	        $data["product_description"][2]["meta_keyword"] = $prod[15];
+	        $data["product_description"][2]["tag"]          = "";
+
+	        // idioma ingles, lo agregamos para que no haya errores si editamos manualmente
+			$data["product_description"][1]["name"]         = $prod[0];
+	        $data["product_description"][1]["description"]  = "<p>la vamos a ir formando nosotros</p>";
+	        $data["product_description"][1]["meta_title"]   = $prod[13];
+	        $data["product_description"][1]["meta_description"]= $prod[14];
+	        $data["product_description"][1]["meta_keyword"] = $prod[15];
+	        $data["product_description"][1]["tag"]          = "";
+
+			$data["model"]                       = $prod[2];
+			$data["sku"]                         = "";
+			$data["upc"]                         = "";
+			$data["ean"]                         = "";
+			$data["jan"]                         = "";
+			$data["isbn"]                        = "";
+			$data["mpn"]                         = "";
+			$data["location"]                    = "";
+			$data["price"]                       = str_replace(',','.',$prod[6]);
+			$data["tax_class_id"]                = "model_telas"; // ver que ponemos acá, controlar cuando cargamos un producto
+			$data["quantity"]                    = "99999999";
+			$data["minimum"]                     = "1";
+			$data["subtract"]                    = "1";
+			$data["stock_status_id"]             = "6";
+			$data["shipping"]                    = "1";
+			$data["date_available"]              = "2018-12-10";
+			$data["length"]                      = "1"; // largo, entiendo que esto depende de la cantidad
+			$data["width"]                       = self::set_width($prod[1]); //ancho
+			$data["height"]                      = "1"; // alto. entiendo que es infimo por que son telas.
+			$data["length_class_id"]             = "1"; // 1 es centimetros seteadas las dimensiones
+			$data["weight"]                      = $prod[16]; // el peso por cada metro en gramos
+			$data["weight_class_id"]             = "2"; // 2 es en gramos que es lo que vamos a usar para medir cada metro de tela.
+			$data["status"]                      = "1";
+			$data["sort_order"]                  = "0";
+			$data["manufacturer"]                = "";
+			$data["manufacturer_id"]             = "0";
+			$data["category"]                    = '';
+			$data['product_category'] 			 = self::set_categories($prod[17], $prod[0]);
+
+			$data['product_discount'][0]['customer_group_id'] = '1';
+			$data['product_discount'][0]['quantity'] = '10';
+			$data['product_discount'][0]['priority'] = '';
+			$data['product_discount'][0]['price'] = str_replace(',','.',$prod[5]);
+			$data['product_discount'][0]['date_start'] = '';
+			$data['product_discount'][0]['date_end'] = '';
+
+			$data['product_discount'][1]['customer_group_id'] = '1';
+			$data['product_discount'][1]['quantity'] = '20';
+			$data['product_discount'][1]['priority'] = '';
+			$data['product_discount'][1]['price'] = str_replace(',','.',$prod[4]);;
+			$data['product_discount'][1]['date_start'] = '';
+			$data['product_discount'][1]['date_end'] = '';
 
 
-        $add_product = $this->model_catalog_product->addProduct($data);
+			$data['product_discount'][2]['customer_group_id'] = '1';
+			$data['product_discount'][2]['quantity'] = '100';
+			$data['product_discount'][2]['priority'] = '';
+			$data['product_discount'][2]['price'] = str_replace(',','.',$prod[3]);;
+			$data['product_discount'][2]['date_start'] = '';
+			$data['product_discount'][2]['date_end'] = '';
 
 
-        // var_dump($add_product);
+			$data["filter"]                      = "";
+			$data["product_store"][0]            = "0";
+			$data["download"]                    = "";
+			$data["related"]                     = "";
+			$data["option"]                      = "";
+			$data["image"]                       = "data/telas/" . $prod[19];
+			$data["points"]                      = "";
+			$data["product_reward"][1]["points"] = "0";
+			$data["product_seo_url"][0][2]       = $prod[24]; // para los dos idiomas  CASTELLANO
+			$data["product_seo_url"][0][1]       = $prod[24] . rand(0,99); // para los dos idiomas INGLES
+			$data["product_layout"][0]           = "";
 
-		// $data["product_description"][2]["name"]         = "Producto 18DIC 1702 NEW NEW NEW NEW";
+			$data['product_image'][0]['image'] = 'data/telas/' . $prod[20];
+			$data['product_image'][0]['sort_order'] = '1';
+			$data['product_image'][1]['image'] = 'data/telas/' . $prod[21];
+			$data['product_image'][1]['sort_order'] = '2';
+			$data['product_image'][2]['image'] = 'data/telas/' . $prod[22];
+			$data['product_image'][2]['sort_order'] = '3';
+			$data['product_image'][3]['image'] = 'data/telas/' . $prod[23];
+			$data['product_image'][3]['sort_order'] = '4';
 
-  //   	$data['product_image'][0]['image'] = 'data/telas/13.jpg';
-		// $data['product_image'][0]['sort_order'] = '0';
-		// $data['product_image'][1]['image'] = 'data/telas/14.jpg';
-		// $data['product_image'][1]['sort_order'] = '0';
-		// $data['product_image'][2]['image'] = 'data/telas/15.jpg';
-		// $data['product_image'][2]['sort_order'] = '0';
-		// $data['product_image'][3]['image'] = 'data/telas/11.jpg';
-		// $data['product_image'][3]['sort_order'] = '0';
 
+
+			// creación del producto
+	        $this->load->language('catalog/product');
+	        $this->document->setTitle($this->language->get('heading_title'));
+	        $this->load->model('catalog/product');
+	        $add_product = $this->model_catalog_product->addProduct($data);
+	        if ( isset($add_product) && is_numeric($add_product) && $add_product > 0)
+	        {
+	        	// producto creado correctamente	# code...
+	        } else {
+	        	echo 'ERROR FATAL. No puedo crear el producto ' . $prod[0];
+	        	exit(1);
+	        }
+
+		}
+
+		echo 'Productos Insertados Correctamente . . .';
+		exit(0);
 
 		// $edit_product = $this->model_catalog_product->editProduct( $add_product, $data );
-
-
-		// var_dump( $edit_product );
-
 
         return true;
 
 
     }
 
+    // nos devuelve el ancho en centímetros. Es pasado como parámetro en metros con coma como separador.
+    static function set_width( $width )
+    {
+    	// width ejemplo 1,60
+    	// y lo tenemos que dejar en 160
+    	// por que está en centimetro
+    	$width = str_replace(',','.',$width);
+    	$width = (float)$width * 100;
 
+    	return (int)$width;
+    }
 
+    // nos devuelve el array con el id de las categorias.
+    static function set_categories( $categories, $name_product )
+    {
+    	$categories = trim($categories);
+
+		$keys_cat['blanco']           = 172;
+		$keys_cat['moda']             = 59;
+		$keys_cat['ofertas']          = 173;
+		$keys_cat['telas-por-nombre'] = 170;
+		$keys_cat['telas-por-uso']    = 171;
+
+    	$categories_words = explode(",", $categories);
+
+    	foreach ($categories_words AS $name_cat)
+    	{
+    		$name_cat = trim(strtolower($name_cat));
+    		if ( $name_cat == 'blanco') {
+    			$add_category[] = $keys_cat['blanco'];
+    		} else if ( $name_cat == 'moda' ) {
+    			$add_category[] = $keys_cat['moda'];
+    		} else if ( $name_cat == 'ofertas') {
+    			$add_category[] = $keys_cat['ofertas'];
+    		} else if ( $name_cat == 'telas por nombre' ) {
+    			$add_category[] = $keys_cat['telas-por-nombre'];
+    		} else if ( $name_cat == 'telas por uso' ) {
+    			$add_category[] = $keys_cat['telas-por-uso'];
+    		} else {
+    			echo 'ERROR FATAL, no detecta la categoria ' . $name_cat .  ' en producto ' . $name_product;
+    			exit(1);
+    		}
+    	}
+
+    	return ($add_category);
+
+    }
 
 
 }
