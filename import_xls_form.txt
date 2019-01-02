@@ -1,0 +1,597 @@
+<form autocomplete="off" action="http://telas/admin/index.php?route=extension/module/import_xls&amp;user_token=EFsr0NoQthoTZomsO3CFvSuAQQ603z33" method="post" enctype="multipart/form-data" id="import_xls" class="form-horizontal"><input type="hidden" value="0" name="no_exit"><input type="hidden" value="" name="force_function"><input type="hidden" name="import_xls_license_id" value="trial-pnikLSO3Co"><ul class="nav nav-tabs"><li class="active"><a class="tab_export---import" href="#tab-export---import" data-toggle="tab"><i class="fa fa-database"></i>Export - Import</a></li><li ><a class="tab_profiles" href="#tab-profiles" data-toggle="tab"><i class="fa fa-user"></i>Profiles</a></li><li ><a class="tab_custom-fields" href="#tab-custom-fields" data-toggle="tab"><i class="fa fa-flask"></i>Custom fields</a></li><li ><a class="tab_cron-jobs" href="#tab-cron-jobs" data-toggle="tab"><i class="fa fa-calendar"></i>CRON Jobs</a></li><li ><a class="tab_migrations-or-backups" href="#tab-migrations-or-backups" data-toggle="tab"><i class="fa fa-database"></i>Migrations or Backups</a></li><li ><a class="tab_faq" href="#tab-faq" data-toggle="tab"><i class="fa fa-question-circle"></i>FAQ</a></li><li ><a class="tab_support" href="#tab-support" data-toggle="tab"><i class="fa fa-ticket"></i>Support</a></li><li ><a class="tab_changelog---downloads" href="#tab-changelog---downloads" data-toggle="tab"><i class="fa fa-file-text"></i>Changelog - downloads</a></li></ul><div class="tab-content"><div class="tab-pane active" id="tab-export---import"><div class="alert alert-danger" style="margin-bottom: 0px;"><i class="fa fa-exclamation-circle"></i>In <b>trial version</b>, import/export processes are restricted to <b>50 elements</b>.<button type="button" class="close" data-dismiss="alert">×</button></div><div class="form-group type_legend" ><div class="col-md-12"><legend><i class="fa fa-user"></i>Select a profile to continue with export/import process.</legend><div style="clear:both;"></div></div></div><div class="form-group type_select" ><label class="col-md-2 control-label">Select profile</label><div class="col-md-10"><select name="import_xls_profiles" class="selectpicker form-control"onChange="check_profile_selected()" data-live-search="true"><option value="" data-optionposition="0"> - Select a profile - </option></select><div style="clear: both; height: 4px;"></div><a href="javascript:{}" onclick="launch_profile(true)">Click to download a sample profile file</a></div></div><div class="form-group type_text" ><label class="col-md-2 control-label">From<span data-toggle="tooltip" data-html="true" title="Leave blank to remove "from" range"></span></label><div class="col-md-10"><input placeholder="From" id="import_xls_from" name="import_xls_from" type="text" value="" class="form-control input_profile_export"/></div></div><div class="form-group type_text" ><label class="col-md-2 control-label">To<span data-toggle="tooltip" data-html="true" title="Leave blank to remove "to" range"></span></label><div class="col-md-10"><input placeholder="To" id="import_xls_to" name="import_xls_to" type="text" value="" class="form-control input_profile_export"/></div></div><div class="form-group type_button" ><label class="col-md-2 control-label">Upload file<span data-toggle="tooltip" data-html="true" title="Keep in mind the format file has to be compatible with the format saved in your profile."></span></label><div class="col-md-10"><a onclick="$(this).next('input').click();" class="button input_profile_import"><i class="fa fa-upload"></i> Upload file<span></span></a><input onchange="readURL($(this));" name="upload" type="file" style="display:none;"></div></div><div class="form-group launch_profile type_button" ><label class="col-md-2 control-label">Launch profile selected</label><div class="col-md-10"><a onclick="launch_profile();" class="button"><i class="fa fa-rocket"></i> Launch profile selected</a><br><a href="javascript:{}" data-remodal-target="export_import_remodal_server_config"><b style="color:#f00;">IMPORTANT! READ BEFORE LAUNCHING YOUR PROFILE</b></a>
+                <div class="remodal export_import_remodal_server_config" data-remodal-id="export_import_remodal_server_config" data-remodal-options="hashTracking: false">
+                    <button data-remodal-action="close" class="remodal-close"></button>
+                    <h1>Server limitations</h1>
+                    
+                    <div class="remodal_content">        <p>We work very hard to achieve the highest possible optimization in the import and export processes. However, if you try do an operation that is exceeds your server limits you will experience errors and processes won't be completed.</p>
+<p><b>Such errors are not related to this tool</b>, you will need to edit the following PHP directives in your server:</p>
+        
+        <p>The process is exceeds some of these PHP directives values:</p>
+        <ul>
+            <li><b>memory_limit</b> (Megabytes)</li>
+            <li><b>max_execution_time</b> (Seconds)</li>
+            <li><b>upload_max_filesize</b> (Megabytes)</li>
+            <li><b>post_max_size</b> (Megabytes)</li>
+        </ul>
+        
+        <p>The values depend on the size of the process or file that you are trying to load, for example:</p>
+        <ul>
+            <li><b>memory_limit</b>: 512M</li>
+            <li><b>max_execution_time</b>: 800</li>
+            <li><b>upload_max_filesize</b>: 240M</li>
+            <li><b>post_max_size</b>: 250M</li>
+        </ul>    
+                
+        <p>The best way to increase these values is doing it directly in your server configuration, we recommend to ask your hosting company if you are unable to change them yourself.</p>
+        <p>---------------------------</p>
+        <p>You also can try these manual methods:</p>
+        
+        <p><b>METHOD 1: MODIFY OR ADD THE FOLLOWING VALUES IN ADMIN/PHP.INI:</b></p>
+        <p>
+        memory_limit = 512M<br>
+        max_execution_time = 800<br>
+        upload_max_filesize = 240M<br>
+        post_max_size = 250M<br>
+        </p>
+        
+        <p><b>METHOD 2: CREATE THE FILE ADMIN/.HTACCESS WITH THE FOLLOWING CONTENT:</b></p>
+        <p>
+        php_value memory_limit 512M<br>
+        php_value max_execution_time 800<br>
+        php_value upload_max_filesize 240M<br>
+        php_value post_max_size 250M<br>
+        </p>
+        
+        <p><b>HOW TO CHECK IF VALUES WERE APPLIED:</b></p>
+        <ol>
+            <li>Create a file in your root path called "phpinfo.php" with next PHP content:<pre><?php phpinfo(); ?></pre></li>
+            <li>Access to http://yourdomain.com/phpinfo.php</li>
+            <li>Press CTRL+F/COMMAND+F and search the directive names</li>
+        </ol>
+       
+        <p>If you still see the old values, it is possible that METHOD 1 and METHOD 2 did not work because your server does not allow this type of changes across php.ini/.htaccess files. If that is the case, your changes have to be applied directly in server configuration and apache have to be restarted.</p>
+        </div>
+                    <br>
+                    
+                    <button data-remodal-action="confirm" class="remodal-confirm">Confirm</button>
+                </div>
+            
+                <div class="remodal export_import_remodal_process" data-remodal-id="export_import_remodal_process" data-remodal-options="closeOnOutsideClick: false, closeOnEscape: false, hashTracking: false, closeOnCancel: false">
+                    
+                    <h1>Operation progress</h1>
+                    <h2>The PHP Process launched from web browser cannot be stopped manually. Process will finish by itself when completed. While this process is running, you may notice your website running slower, this only affects your browser session, the rest of your visitors will not notice any difference.</h2>
+                    <div class="remodal_content"></div>
+                    <br>
+                    
+                    <button data-remodal-action="confirm" class="remodal-confirm">Confirm</button>
+                </div>
+            </div></div>
+                <div class="remodal innodb" data-remodal-id="innodb" data-remodal-options="closeOnConfirm: false">
+                    <button data-remodal-action="close" class="remodal-close"></button>
+                    <h1>INNODB DATABASE ENGINE</h1>
+                    
+                    <div class="remodal_content">        <p>With InnoDB, your store will be automatically restored just like it was before launching the import process in case an error occurs during this process.</p>
+        <h2>FAQ</h2>
+        <ol>
+            <li><b>Is required?:</b> No, but it's HIGHLY RECOMMENDED.</li>
+            <li><b>I will lose data?:</b> Not at all, change your database to InnoDB engine will not affect your current database.</li>
+            <li><b>When I try to convert to InnoDB engine I get an error:</b> You will find an explanation to that error under the FAQ tab.</li>
+        </ol>
+        </div>
+                    <br>
+                    <button data-remodal-action="cancel" class="remodal-cancel">Cancel</button>
+                    <button data-remodal-action="confirm" class="remodal-confirm"><i class="fa fa-database"></i>Convert to InnoDB</button>
+                </div>
+            <script type="text/javascript">var inst = $('[data-remodal-id=innodb]').remodal({closeOnConfirm: false});inst.open();</script></div><div class="tab-pane" id="tab-profiles"><div class="form-group type_legend" ><div class="col-md-12"><legend><i class="fa fa-user"></i>Manage profiles - Load a profile or create new profile</legend><div style="clear:both;"></div></div></div><div class="col-md-4 form-group-columns type_select" ><label class=" control-label">Load profile</label><div class=""><select name="import_xls_profiles" class="selectpicker form-control"onChange="profile_load($(this))" data-live-search="true"><option value="" data-optionposition="0"> - Select a profile - </option></select></div></div><div class="col-md-4 form-group-columns or type_html_code" ><div class="col-md-12">- OR -</div></div><div class="col-md-4 form-group-columns type_html_code" ><label class=" control-label">Create profile</label><div class="">
+                        <a class="profile_create_link" href="javascript:{}" onclick="profile_create('import')"><i class="fa fa-upload"></i>Click to create <b>Import profile</b></a><input type="hidden" name="profile_type" value=""><input type="hidden" name="profile_id" value="">
+                        <a class="profile_create_link" href="javascript:{}" onclick="profile_create('export')"><i class="fa fa-download"></i>Click to create <b>Export profile</b></a>
+                    </div></div><div class="form-group profile_import type_legend" ><div class="col-md-12"><legend style="margin-top: 17px;"><i class="fa fa-upload"></i>Import profile configuration</legend><div style="clear:both;"></div></div></div><div class="form-group profile_export type_legend" ><div class="col-md-12"><legend style="margin-top: 17px;"><i class="fa fa-download"></i>Export profile configuration</legend><div style="clear:both;"></div></div></div><div class="form-group profile_import profile_export main_configuration configuration type_select" ><label class="col-md-2 control-label">Format file</label><div class="col-md-10"><select name="import_xls_file_format" class="selectpicker form-control"onChange="profile_check_format($(this).val())" data-live-search="true"><option value="xlsx" data-optionposition="0">.xlsx</option><option value="csv" data-optionposition="1">.csv</option><option value="xml" data-optionposition="2">.xml</option><option value="ods" data-optionposition="3">.ods</option><option value="spreadsheet" data-optionposition="4">Google Spreadsheet</option></select><br><a href="javascript:{}" data-remodal-target="mapping_xml_columns">IMPORTANT: READ ABOUT XML COLUMN MAPPING IN IMPORT PROCESSES</a>
+                <div class="remodal mapping_xml_columns" data-remodal-id="mapping_xml_columns">
+                    <button data-remodal-action="close" class="remodal-close"></button>
+                    <h1>XML COLUMN MAPPING EXAMPLES</h1>
+                    
+                    <div class="remodal_content">    <p>Here you can see all possible cases of "<b>Custom column names</b>" to <b>XML</b> format in <b>Import processes</b></p><br>
+    <img style="width: 605px;" src="https://devmanextensions.com/opencart_admin/ext_ie_pro/img/xml_mapping_example_1.jpg">
+    <p>"<b>CODE</b>" = 23434</p>
+    <img style="width: 605px;" src="https://devmanextensions.com/opencart_admin/ext_ie_pro/img/xml_mapping_example_2.jpg">
+    <p>"<b>CATEGORIES>CATEGORY*0</b>" = Woman<br>
+    "<b>CATEGORIES>CATEGORY*1</b>" = Accesories<br>
+    "<b>CATEGORIES>CATEGORY*2</b>" = Necklaces</p>
+    <img style="width: 605px;" src="https://devmanextensions.com/opencart_admin/ext_ie_pro/img/xml_mapping_example_3.jpg">
+    <p>"<b>parameters>parameter*0@type_explanation</b>" = Gr<br>
+    "<b>parameters>parameter*0@value</b>" = 200<br>
+    "<b>parameters>parameter*1@type_explanation</b>" = Cm<br>
+    "<b>parameters>parameter*1@value</b>" = 35</p>
+    <img style="width: 605px;" src="https://devmanextensions.com/opencart_admin/ext_ie_pro/img/xml_mapping_example_4.jpg">
+    <p>In this case, have to apply "<b>Splitted values</b>" rules.
+</div>
+                    <br>
+                    
+                    <button data-remodal-action="confirm" class="remodal-confirm">Confirm</button>
+                </div>
+            </div></div><div class="form-group profile_import profile_export csv_separator main_configuration configuration type_text" ><label class="col-md-2 control-label">CSV delimiter<span data-toggle="tooltip" data-html="true" title="Leave blank for default delimiter (comma)."></span></label><div class="col-md-10"><input placeholder="CSV delimiter" id="import_xls_csv_separator" name="import_xls_csv_separator" type="text" value="" class="form-control"/></div></div><div class="form-group profile_import profile_export node_xml main_configuration configuration type_text" ><label class="col-md-2 control-label">XML Item node</label><div class="col-md-10"><input placeholder="XML Item node" id="import_xls_node_xml" name="import_xls_node_xml" type="text" value="" class="form-control"/><a href="javascript:{}" data-remodal-target="profile_import_xml_node">Learn about XML nodes</a>
+                <div class="remodal profile_import_xml_node" data-remodal-id="profile_import_xml_node">
+                    <button data-remodal-action="close" class="remodal-close"></button>
+                    <h1>XML Node</h1>
+                    
+                    <div class="remodal_content"><p>For example, if you need to import this XML file:</p><img style="width: 630px;" src="https://devmanextensions.com/opencart_admin/ext_ie_pro/img/xml_node.jpg"><br><br>
+    <p>The mode XML is a tags tree separated by ">", case sensitive and without spaces.</p>
+    <p>The node XML to this example file is: "<b>yml_catalog>shop>offers>offer</b>"</p>
+    <p>After that, in section "Columns", translate columns that you want import and disable all columns that you don't need.</p><img style="width: 630px;" src="https://devmanextensions.com/opencart_admin/ext_ie_pro/img/xml_node_columns.jpg"></div>
+                    <br>
+                    
+                    
+                </div>
+            </div></div><div class="form-group profile_import file_origin main_configuration configuration no_refresh_columns type_select" ><label class="col-md-2 control-label">I will get file from</label><div class="col-md-10"><select name="import_xls_file_origin" class="selectpicker form-control"onChange="profile_import_check_origin($(this).val())" data-live-search="true"><option value="manual" data-optionposition="0">I will upload it manually</option><option value="ftp" data-optionposition="1">From external Server</option><option value="url" data-optionposition="2">From URL</option></select></div></div><div class="form-group profile_export file_destiny main_configuration configuration no_refresh_columns type_select" ><label class="col-md-2 control-label">The file will be</label><div class="col-md-10"><select name="import_xls_file_destiny" class="selectpicker form-control"onChange="profile_export_check_destiny($(this).val())" data-live-search="true"><option value="download" data-optionposition="0">Downloaded from my web browser</option><option value="server" data-optionposition="1">Saved to my server</option><option value="external_server" data-optionposition="2">Saved into external server</option></select></div></div><div class="form-group profile_export server main_configuration configuration type_text" ><label class="col-md-2 control-label">File path</label><div class="col-md-10"><input placeholder="File path" id="import_xls_file_destiny_server_path" name="import_xls_file_destiny_server_path" type="text" value="" class="form-control"/><a href="javascript:{}" data-remodal-target="profile_export_file_destiny_server_path"><b>IMPORTANT</b>: Click to read</a>
+                <div class="remodal profile_export_file_destiny_server_path" data-remodal-id="profile_export_file_destiny_server_path">
+                    <button data-remodal-action="close" class="remodal-close"></button>
+                    <h1>File path</h1>
+                    
+                    <div class="remodal_content">Your Opencart root path is <b>/var/www/html/telas/</b>. Let's see some examples:
+           <ol>
+                <li><b>Path to save file in root:</b> /var/www/html/telas/</li>
+                <li><b>Path to save file in root inside folder "export_products":</b> /var/www/html/telas/export_products/</li>
+                <li><b>Path to save file in root inside tree folders "export_products/category_cars/":</b> /var/www/html/telas/export_products/category_cars/</li>
+                <li><b>Path to save file outside root (example): </b>/var/www/</li>
+           </ol></div>
+                    <br>
+                    
+                    
+                </div>
+            </div></div><div class="form-group profile_export server main_configuration configuration type_text" ><label class="col-md-2 control-label">File name<span data-toggle="tooltip" data-html="true" title="Do NOT include file extension. (E.g. products is correct, products.xlsx is incorrect)"></span></label><div class="col-md-10"><input placeholder="File name" id="import_xls_file_destiny_server_file_name" name="import_xls_file_destiny_server_file_name" type="text" value="" class="form-control"/></div></div><div class="form-group profile_export server main_configuration configuration no_refresh_columns type_select" ><label class="col-md-2 control-label">File sufix</label><div class="col-md-10"><select name="import_xls_file_destiny_server_file_name_sufix" class="selectpicker form-control" data-live-search="true"><option value="" data-optionposition="0">No sufix (file will be replaced in new exports)</option><option value="date" data-optionposition="1">Date export. Example "-2019-01-31.xlsx"</option><option value="datetime" data-optionposition="2">Date and time export. Example "-2019-01-31-1035.xlsx"</option></select></div></div><div class="form-group profile_import url main_configuration configuration type_text" ><label class="col-md-2 control-label">Url</label><div class="col-md-10"><input placeholder="Url" id="import_xls_url" name="import_xls_url" type="text" value="" class="form-control"/></div></div><div class="form-group profile_import profile_export ftp main_configuration configuration type_text" ><label class="col-md-2 control-label">FTP - Host</label><div class="col-md-10"><input placeholder="FTP - Host" id="import_xls_ftp_host" name="import_xls_ftp_host" type="text" value="" class="form-control"/></div></div><div class="form-group profile_import profile_export ftp main_configuration configuration type_text" ><label class="col-md-2 control-label">FTP - Username</label><div class="col-md-10"><input placeholder="FTP - Username" id="import_xls_ftp_username" name="import_xls_ftp_username" type="text" value="" class="form-control"/></div></div><div class="form-group profile_import profile_export ftp main_configuration configuration type_text" ><label class="col-md-2 control-label">FTP - Password</label><div class="col-md-10"><input placeholder="FTP - Password" id="import_xls_ftp_password" name="import_xls_ftp_password" type="text" value="" class="form-control"/></div></div><div class="form-group profile_import profile_export ftp main_configuration configuration type_text" ><label class="col-md-2 control-label">FTP - Port<span data-toggle="tooltip" data-html="true" title="By default, system will assign port 21"></span></label><div class="col-md-10"><input placeholder="FTP - Port" id="import_xls_ftp_port" name="import_xls_ftp_port" type="text" value="21" class="form-control"/></div></div><div class="form-group profile_import profile_export ftp main_configuration configuration type_text" ><label class="col-md-2 control-label">FTP - Path to file<span data-toggle="tooltip" data-html="true" title="Path example: /httpdocs/myfiles/"></span></label><div class="col-md-10"><input placeholder="FTP - Path to file" id="import_xls_ftp_path" name="import_xls_ftp_path" type="text" value="" class="form-control"/></div></div><div class="form-group profile_import profile_export ftp main_configuration configuration type_text" ><label class="col-md-2 control-label">FTP - File name<span data-toggle="tooltip" data-html="true" title="Not include extension. (for example .xlsx NOT)"></span></label><div class="col-md-10"><input placeholder="FTP - File name" id="import_xls_ftp_file" name="import_xls_ftp_file" type="text" value="" class="form-control"/></div></div><div class="form-group profile_import profile_export spreadsheet_name main_configuration configuration type_text" ><label class="col-md-2 control-label">G. Spreadsheet name<span data-toggle="tooltip" data-html="true" title="Remember that this name have to be exactly same that your Google root file name."></span></label><div class="col-md-10"><input placeholder="G. Spreadsheet name" id="import_xls_spreadsheet_name" name="import_xls_spreadsheet_name" type="text" value="" class="form-control"/><a href="javascript:{}" data-remodal-target="profile_import_spreadsheet_remodal"><b>IMPORTANT: Click to configure Google Drive API</b></a>
+                <div class="remodal profile_import_spreadsheet_remodal" data-remodal-id="profile_import_spreadsheet_remodal" data-remodal-options="closeOnConfirm: false, hashTracking: false">
+                    <button data-remodal-action="close" class="remodal-close"></button>
+                    <h1>Google Drive API configuration</h1>
+                    
+                    <div class="remodal_content">        <h3>1.- Create API and download .json credentials file</h3>
+        <p>By default, a new spreadsheet cannot be accessed via Google’s API. You will need to go to your Google APIs console and create a new project and set it up to expose your Spreadsheet’s data.</p>
+        <ol>
+            <li>Go to the <a href="https://console.developers.google.com/" taget="_blank">Google APIs Console</a>.</li>
+            <li>Create a new project.</li>
+            <li>Click Enable API. Search for and enable the Google Drive API.</li>
+            <li>Create credentials for a Web Server to access Application Data.</li>
+            <li>Name the service account and grant it a Project Role of Editor.</li>
+            <li>A JSON file will be downloaded.</li>
+        </ol>
+        <img style="margin-bottom: 15px;" src="https://devmanextensions.com/opencart_admin/ext_ie_pro/img/google_spreadsheet_create_googl_drive_api.gif">
+        <h3>2.- Upload .json credentials file</h3><input name="spreadsheet_json" type="file">
+        </br>
+        <h3>3.- Share Sheets with your Service Account ID</h3>
+        <p>Finally, to works with spreadsheet files saved in your Google Drive root path, you need share these files with your "Service account ID", this is: <b>Will appear after uploaded .json file.</b></p>
+        
+</div>
+                    <br>
+                    <button data-remodal-action="cancel" class="remodal-cancel">Cancel</button>
+                    <button data-remodal-action="confirm" class="remodal-confirm">Confirm</button>
+                </div>
+            </div></div><div class="form-group profile_import profile_export main_configuration configuration type_select" ><label class="col-md-2 control-label">Elements</label><div class="col-md-10"><select name="import_xls_i_want" class="selectpicker form-control"onChange="profile_check_i_want()" data-live-search="true"><option value="" data-optionposition="0"> - Select -</option><option value="products" data-optionposition="1">Products (+ related product data)</option><option value="specials" data-optionposition="2">Product Specials</option><option value="discounts" data-optionposition="3">Product Discounts</option><option value="categories" data-optionposition="4">Categories</option><option value="attribute_groups" data-optionposition="5">Attribute groups</option><option value="attributes" data-optionposition="6">Attributes</option><option value="options" data-optionposition="7">Options</option><option value="option_values" data-optionposition="8">Option values</option><option value="manufacturers" data-optionposition="9">Manufacturers</option><option value="filter_groups" data-optionposition="10">Filter groups</option><option value="filters" data-optionposition="11">Filters</option><option value="customer_groups" data-optionposition="12">Customer groups</option><option value="customers" data-optionposition="13">Customers</option><option value="addresses" data-optionposition="14">Addresses</option><option value="orders" data-optionposition="15">Orders</option><option value="coupons" data-optionposition="16">Coupons</option></select></div></div><div class="form-group profile_import profile_export configuration products type_legend" ><div class="col-md-12"><legend><i class="fa fa-cog"></i>General products configuration</legend><div style="clear:both;"></div></div></div><div class="col-md-4 form-group-columns profile_import configuration products no_refresh_columns type_boolean" ><label class=" control-label">Strict update</label><div class=""><label class="checkbox_container"><input  name="import_xls_strict_update" type="checkbox" class="ios-switch green" value="1"/><div><div></div></div></label><a href="javascript:{}" data-remodal-target="profile_strict_update"><b>IMPORTANT</b>: Click to read!</a>
+                <div class="remodal profile_strict_update" data-remodal-id="profile_strict_update">
+                    <button data-remodal-action="close" class="remodal-close"></button>
+                    <h1>Strict update</h1>
+                    
+                    <div class="remodal_content">    <p>With this feature enabled, <b>ALL RELATED PRODUCT DATA FOUND IN FILE WILL BE CLEANED BEFORE UPDATE THESE</b>.</p>
+    <p>This mode enabled is useful when:
+        <ol>
+            <li>You want do a bulk update of your related product data, or want to remove all product related data.</li>
+            <li>Your provider is giving your related product data, and these changing everyday, removing rows, adding rows..</li>
+        </ol>
+    </p>
+    <p><b>Example</b>: Imagine that you want keep 2 of 5 seconday images in an existing product saved in your store (see next excel screenshot, images marked with green we can keep these).</p>
+    <img style="width: 605px;" src="https://devmanextensions.com/opencart_admin/ext_ie_pro/img/strict_update_images_1.jpg">
+    <br><br>
+    <p>Currently, this product has assigned these 5 images:
+    <ol>
+        <li>catalog/image1.jpg</li>
+        <li>catalog/image2.jpg</li>
+        <li>catalog/image3.jpg</li>
+        <li>catalog/image4.jpg</li>
+        <li>catalog/image5.jpg</li>
+    </ol>
+    </p>
+    <p>We deleted red images and moved green images to first columns, we also need add a new image (marked in purple), the result is next:</p>
+    <img style="width: 605px;" src="https://devmanextensions.com/opencart_admin/ext_ie_pro/img/strict_update_images_2.jpg">
+    <br><br>
+    <p>With "<b>Strict update</b>" enabled, after import this excel, product images will be deleted and only be assigned new images:</p>
+    <ol>
+        <li>catalog/image2.jpg</li>
+        <li>catalog/image5.jpg</li>
+        <li>catalog/image6.jpg</li>
+    </ol>
+    <p>In case that we need <b>DELETE ALL RELATED DATA</b>, simple let in blank all related data columns, in our case:</p>
+    <img style="width: 605px;" src="https://devmanextensions.com/opencart_admin/ext_ie_pro/img/strict_update_images_3.jpg">
+    <br><br>
+    <p>With "<b>Strict update</b>" enabled, after import this excel, all product images will be deleted.</p>
+</div>
+                    <br>
+                    
+                    
+                </div>
+            </div></div><div class="col-md-4 form-group-columns profile_import profile_export configuration products type_boolean" ><label class=" control-label">Multilanguage</label><div class=""><label class="checkbox_container"><input  name="import_xls_multilanguage" type="checkbox" class="ios-switch green" value="1"/><div><div></div></div></label><a href="javascript:{}" data-remodal-target="profile_multilanguage"><b>IMPORTANT</b>: Click to read!</a>
+                <div class="remodal profile_multilanguage" data-remodal-id="profile_multilanguage">
+                    <button data-remodal-action="close" class="remodal-close"></button>
+                    <h1>Multilanguage</h1>
+                    
+                    <div class="remodal_content"><p>With this model, all columns compatible with multilanguage will be duplicated each language.</p>
+    <p>Example columns with "Multilanguage" <b>DISABLED</b>:
+        </p><ul>
+            <li>Name</li>
+            <li>Description</li>
+            <li>Meta description</li>
+            <li>Meta title</li>
+            <li>...</li>
+        </ul>
+    <p></p>
+    <p>* If you have more than 1 language installed in your shop and "multilanguage" is disabled, the value put in multilanguage column will be replicated to another languages automatically.</p>
+    <p>Example columns with "Multilanguage" <b>ENABLED</b>:
+    </p><ul>
+        <li>Name en-gb</li>
+        <li>Name nl-nl</li>
+        <li>Description en-gb</li>
+        <li>Description nl-nl</li>
+        <li>Meta description en-gb</li>
+        <li>Meta description nl-nl</li>
+        <li>Meta title en-gb</li>
+        <li>Meta title nl-nl</li>
+        <li>...</li>
+    </ul></div>
+                    <br>
+                    
+                    
+                </div>
+            </div></div><div class="col-md-4 form-group-columns profile_import profile_export configuration products type_boolean" ><label class=" control-label">Category tree</label><div class=""><label class="checkbox_container"><input  name="import_xls_category_tree" type="checkbox" class="ios-switch green" value="1"/><div><div></div></div></label><a href="javascript:{}" data-remodal-target="profile_cat_tree"><b>IMPORTANT</b>: Click to read!</a>
+                <div class="remodal profile_cat_tree" data-remodal-id="profile_cat_tree">
+                    <button data-remodal-action="close" class="remodal-close"></button>
+                    <h1>Category tree VS no category tree</h1>
+                    
+                    <div class="remodal_content">    <p><b>Category tree DISABLED</b>: Keep disabled if your don't want use categories tree or you want assign individual categories to your products.
+    <br>
+    Excel example (columns marked in red):</p>
+    <img style="width: 605px;" src="https://devmanextensions.com/opencart_admin/ext_ie_pro/img/excel_example_categories.jpg">
+    <br><br>
+    <p><b>Category tree ENABLED</b>: Enable it if your want use categories tree in your products.
+    <br>
+    Excel example (columns marked in red, rows tree 1 marked in yellow, rows tree 2 marked in blue):</p>
+    <img style="width: 605px;" src="https://devmanextensions.com/opencart_admin/ext_ie_pro/img/excel_example_categories_tree.jpg">
+</div>
+                    <br>
+                    
+                    
+                </div>
+            </div></div><div class="col-md-4 form-group-columns profile_import configuration products no_refresh_columns type_boolean" ><label class=" control-label">Category last child assign</label><div class=""><label class="checkbox_container"><input  name="import_xls_category_tree_last_child" type="checkbox" class="ios-switch green" value="1"/><div><div></div></div></label><a href="javascript:{}" data-remodal-target="profile_cat_last_tree_assign"><b>IMPORTANT</b>: Click to read!</a>
+                <div class="remodal profile_cat_last_tree_assign" data-remodal-id="profile_cat_last_tree_assign">
+                    <button data-remodal-action="close" class="remodal-close"></button>
+                    <h1>Category last child assign</h1>
+                    
+                    <div class="remodal_content">    <p>Example import result with "Last child assign" <b>DISABLED</b>:</p><img style="width: 260px;" src="https://devmanextensions.com/opencart_admin/ext_ie_pro/img/strict_update_disabled.jpg">
+    <br><br>
+    <p>Example import result with "Last child assign" <b>ENABLED</b>:</p><img style="width: 260px;" src="https://devmanextensions.com/opencart_admin/ext_ie_pro/img/strict_update_enabled.jpg">
+</div>
+                    <br>
+                    
+                    
+                </div>
+            </div></div><div class="col-md-4 form-group-columns profile_import profile_export configuration products no_refresh_columns type_boolean" ><label class=" control-label">Add tax to prices</label><div class=""><label class="checkbox_container"><input  name="import_xls_sum_tax" type="checkbox" class="ios-switch green" value="1"/><div><div></div></div></label><a href="javascript:{}" data-remodal-target="sum_tax"><b>IMPORTANT</b>: Click to read!</a>
+                <div class="remodal sum_tax" data-remodal-id="sum_tax">
+                    <button data-remodal-action="close" class="remodal-close"></button>
+                    <h1>Add tax to prices</h1>
+                    
+                    <div class="remodal_content">    <p><b>Import process</b>: If product has a tax class assigned, this tax value will be <b>added</b> to price, this only will happen IN PRODUCT CREATION. This can be useful is you are getting product files from your provider, and their prices are <b>without TAXES</b>, hovewer you want import these prices with taxes because you are managing prices with taxes (without using default Opencart tax rates).</p>
+    <p><b>Export process:</b> If product has a tax class assigned, this tax value will be <b>added</b> to price. This can be useful if you are sending products to another plataform wich requires prices with taxes.</p>
+</div>
+                    <br>
+                    
+                    
+                </div>
+            </div></div><div class="col-md-4 form-group-columns profile_import profile_export configuration products no_refresh_columns type_boolean" ><label class=" control-label">Subtract tax from prices</label><div class=""><label class="checkbox_container"><input  name="import_xls_rest_tax" type="checkbox" class="ios-switch green" value="1"/><div><div></div></div></label><a href="javascript:{}" data-remodal-target="rest_tax"><b>IMPORTANT</b>: Click to read!</a>
+                <div class="remodal rest_tax" data-remodal-id="rest_tax">
+                    <button data-remodal-action="close" class="remodal-close"></button>
+                    <h1>Subtract tax from prices</h1>
+                    
+                    <div class="remodal_content">    <p><b>Import process</b>: If product has a tax class assigned, this tax value will be <b>subtracted from price</b>, this only will happen IN PRODUCT CREATION. This can be useful is you are getting product files from your provider, and their prices are <b>with TAXES</b>, however you want import these prices without taxes.</p>
+    <p><b>Export process:</b> If product has a tax class assigned, this tax value will be <b>subtracted from price</b>. This can be useful when your OpenCart product prices include taxes and you are sending products to a  platform that requires prices without taxes.</p>
+</div>
+                    <br>
+                    
+                    
+                </div>
+            <div style="clear:both;"></div></div></div><div class="col-md-4 form-group-columns profile_import configuration products no_refresh_columns type_select" ><label class=" control-label">Product identificator</label><div class=""><select name="import_xls_product_identificator" class="selectpicker form-control" data-live-search="true"><option value="product_id" data-optionposition="0">Product ID</option><option value="model" data-optionposition="1">Product Model</option><option value="sku" data-optionposition="2">Product SKU</option><option value="upc" data-optionposition="3">Product UPC</option><option value="ean" data-optionposition="4">Product EAN</option><option value="jan" data-optionposition="5">Product JAN</option><option value="isbn" data-optionposition="6">Product ISBN</option><option value="mpn" data-optionposition="7">Product MPN</option></select></div></div><div class="col-md-4 form-group-columns profile_import configuration products no_refresh_columns type_select" ><label class=" control-label">Auto SEO keyword</label><div class=""><select name="import_xls_autoseo_gerator" class="selectpicker form-control" data-live-search="true"><option value="" data-optionposition="0">I will put SEO keyword manually</option><option value="name" data-optionposition="1">Auto generate SEO keyword from product name</option><option value="meta_title" data-optionposition="2">Auto generate SEO keyword from product meta title</option><option value="model" data-optionposition="3">Auto generate SEO keyword from product model</option></select></div></div><div class="col-md-4 form-group-columns profile_import configuration products no_refresh_columns type_select" ><label class=" control-label">For existing products</label><div class=""><select name="import_xls_existing_products" class="selectpicker form-control" data-live-search="true"><option value="edit" data-optionposition="0">Edit these</option><option value="skip" data-optionposition="1">Skip these</option></select></div></div><div class="col-md-4 form-group-columns profile_import configuration products no_refresh_columns type_select" ><label class=" control-label">For new products</label><div class=""><select name="import_xls_new_products" class="selectpicker form-control" data-live-search="true"><option value="edit" data-optionposition="0">Create these</option><option value="skip" data-optionposition="1">Skip these</option></select></div></div><div class="col-md-4 form-group-columns profile_import configuration products no_refresh_columns no_refresh_columns type_text" ><label class=" control-label">Path to downloaded images</label><div class=""><input placeholder="Path to downloaded images" id="import_xls_download_image_route" name="import_xls_download_image_route" type="text" value="" class="form-control"/><a href="javascript:{}" data-remodal-target="profile_import_products_download_image_route"><b>IMPORTANT:</b> Click to read!</a>
+                <div class="remodal profile_import_products_download_image_route" data-remodal-id="profile_import_products_download_image_route" data-remodal-options="button_cancel: false">
+                    <button data-remodal-action="close" class="remodal-close"></button>
+                    <h1>Path to downloaded images</h1>
+                    
+                    <div class="remodal_content">    <p>The system will detect if links exist in "<b>Image</b>" columns, in this case, the import system will download image and assign it to your elements.</p>
+    <p>By default, your images downloaded will be saved in directory "<b>/image/catalog/</b>".</p>
+    <p>In this field, you can add subfolders to this route, to order your images like you want. For example, if you put int his field "<b>my_provider/cars/accessories</b>", the images will be saved in final route "<b>/image/catalog/my_provider/cars/accesories</b>"</p>
+</div>
+                    <br>
+                    <button data-remodal-action="cancel" class="remodal-cancel">Cancel</button>
+                    <button data-remodal-action="confirm" class="remodal-confirm">Confirm</button>
+                </div>
+            </div></div><div class="form-group profile_import profile_export configuration products profile_import_products_data_related_legend type_legend" ><div class="col-md-12"><legend><i class="fa fa-plug"></i>Product related data</legend><div style="clear:both;"></div></div></div><div class="col-md-4 form-group-columns profile_import profile_export configuration products type_text" ><label class=" control-label">Categories number</label><div class=""><input placeholder="Categories number" id="import_xls_cat_number" name="import_xls_cat_number" type="text" value="0" class="form-control"/><a href="javascript:{}" data-remodal-target="profile_cat_number"><b>IMPORTANT</b>: Click to read!</a>
+                <div class="remodal profile_cat_number" data-remodal-id="profile_cat_number">
+                    <button data-remodal-action="close" class="remodal-close"></button>
+                    <h1>Categories number</h1>
+                    
+                    <div class="remodal_content">    <p>This value set the number of "<b>Categories columns</b>" number on file, example file with <b><u>3</u></b> "<b>Categories number</b>" (columns marked in red):</p>
+    <img style="width: 605px;" src="https://devmanextensions.com/opencart_admin/ext_ie_pro/img/excel_example_number_categories.jpg">
+</div>
+                    <br>
+                    
+                    
+                </div>
+            </div></div><div class="col-md-4 form-group-columns profile_import profile_export configuration products type_text" ><label class=" control-label">Category parent numbers</label><div class=""><input placeholder="Category parent numbers" id="import_xls_cat_tree_number" name="import_xls_cat_tree_number" type="text" value="0" class="form-control"/><a href="javascript:{}" data-remodal-target="profile_cat_tree_number_parent"><b>IMPORTANT</b>: Click to read!</a>
+                <div class="remodal profile_cat_tree_number_parent" data-remodal-id="profile_cat_tree_number_parent">
+                    <button data-remodal-action="close" class="remodal-close"></button>
+                    <h1>Category parent numbers</h1>
+                    
+                    <div class="remodal_content">    <p>This number set the number of  "<b>Category parent columns</b>" on file, example file with <b><u>2</u></b> "<b>Category parent numbers</b>" (columns marked in red):</p>
+    <img style="width: 605px;" src="https://devmanextensions.com/opencart_admin/ext_ie_pro/img/excel_example_number_categories_tree_parents.jpg">
+</div>
+                    <br>
+                    
+                    
+                </div>
+            </div></div><div class="col-md-4 form-group-columns profile_import profile_export configuration products type_text" ><label class=" control-label">Category childrens level</label><div class=""><input placeholder="Category childrens level" id="import_xls_cat_tree_children_number" name="import_xls_cat_tree_children_number" type="text" value="0" class="form-control"/><a href="javascript:{}" data-remodal-target="profile_cat_tree_number_children"><b>IMPORTANT</b>: Click to read!</a>
+                <div class="remodal profile_cat_tree_number_children" data-remodal-id="profile_cat_tree_number_children">
+                    <button data-remodal-action="close" class="remodal-close"></button>
+                    <h1>Category childrens level</h1>
+                    
+                    <div class="remodal_content">    <p>This number set the number of "<b>Category children levels</b>" in file, example file with <b><u>2</u></b> "<b>Category children level</b>" in each category tree (columns marked in red):</p>
+    <img style="width: 605px;" src="https://devmanextensions.com/opencart_admin/ext_ie_pro/img/excel_example_number_categories_tree_childrens.jpg">
+</div>
+                    <br>
+                    
+                    
+                </div>
+            </div></div><div class="col-md-4 form-group-columns profile_import profile_export configuration products type_text" ><label class=" control-label">Images number</label><div class=""><input placeholder="Images number" id="import_xls_image_number" name="import_xls_image_number" type="text" value="0" class="form-control"/><a href="javascript:{}" data-remodal-target="profile_import_image_number"><b>IMPORTANT</b>: Click to read!</a>
+                <div class="remodal profile_import_image_number" data-remodal-id="profile_import_image_number">
+                    <button data-remodal-action="close" class="remodal-close"></button>
+                    <h1>Images number</h1>
+                    
+                    <div class="remodal_content">    <p>This number set the "<b>Images columns</b>" number in file, example file with <b><u>5</u></b> "<b>Images number</b>" (columns marked in red):</p>
+    <img style="width: 605px;" src="https://devmanextensions.com/opencart_admin/ext_ie_pro/img/excel_example_number_images.jpg">
+</div>
+                    <br>
+                    
+                    
+                </div>
+            </div></div><div class="col-md-4 form-group-columns profile_import profile_export configuration products type_text" ><label class=" control-label">Attributes number</label><div class=""><input placeholder="Attributes number" id="import_xls_attribute_number" name="import_xls_attribute_number" type="text" value="0" class="form-control"/><a href="javascript:{}" data-remodal-target="profile_import_attribute_number"><b>IMPORTANT</b>: Click to read!</a>
+                <div class="remodal profile_import_attribute_number" data-remodal-id="profile_import_attribute_number">
+                    <button data-remodal-action="close" class="remodal-close"></button>
+                    <h1>Attributes number</h1>
+                    
+                    <div class="remodal_content">    <p>This value sets the number of "<b>Attributes columns</b>" in file, example file with <b><u>2</u></b> "<b>Attributes number</b>" (columns marked in red):</p>
+    <img style="width: 605px;" src="https://devmanextensions.com/opencart_admin/ext_ie_pro/img/excel_example_number_attributes.jpg">
+</div>
+                    <br>
+                    
+                    
+                </div>
+            </div></div><div class="col-md-4 form-group-columns profile_import profile_export configuration products type_text" ><label class=" control-label">Specials number</label><div class=""><input placeholder="Specials number" id="import_xls_special_number" name="import_xls_special_number" type="text" value="0" class="form-control"/><a href="javascript:{}" data-remodal-target="profile_import_special_number"><b>IMPORTANT</b>: Click to read!</a>
+                <div class="remodal profile_import_special_number" data-remodal-id="profile_import_special_number">
+                    <button data-remodal-action="close" class="remodal-close"></button>
+                    <h1>Specials number</h1>
+                    
+                    <div class="remodal_content">    <p>This value set the number of "<b>Specials columns</b>" in file, example file with <b><u>1</u></b> "<b>Specials number</b>" (columns marked in red):</p>
+    <img style="width: 605px;" src="https://devmanextensions.com/opencart_admin/ext_ie_pro/img/excel_example_number_specials.jpg">
+</div>
+                    <br>
+                    
+                    
+                </div>
+            </div></div><div class="col-md-4 form-group-columns profile_import profile_export configuration products type_text" ><label class=" control-label">Discounts number</label><div class=""><input placeholder="Discounts number" id="import_xls_discount_number" name="import_xls_discount_number" type="text" value="0" class="form-control"/><a href="javascript:{}" data-remodal-target="profile_import_discount_number"><b>IMPORTANT</b>: Click to read!</a>
+                <div class="remodal profile_import_discount_number" data-remodal-id="profile_import_discount_number">
+                    <button data-remodal-action="close" class="remodal-close"></button>
+                    <h1>Discounts number</h1>
+                    
+                    <div class="remodal_content">    <p>This value set the number of "<b>Discounts columns</b>" in file, example file with <b><u>1</u></b> "<b>Discounts number</b>" (columns marked in red):</p>
+    <img style="width: 605px;" src="https://devmanextensions.com/opencart_admin/ext_ie_pro/img/excel_example_number_discounts.jpg">
+</div>
+                    <br>
+                    
+                    
+                </div>
+            </div></div><div class="col-md-4 form-group-columns profile_import profile_export configuration products type_text" ><label class=" control-label">Filter groups number</label><div class=""><input placeholder="Filter groups number" id="import_xls_filter_group_number" name="import_xls_filter_group_number" type="text" value="0" class="form-control"/><a href="javascript:{}" data-remodal-target="profile_import_filter_group_number"><b>IMPORTANT</b>: Click to read!</a>
+                <div class="remodal profile_import_filter_group_number" data-remodal-id="profile_import_filter_group_number">
+                    <button data-remodal-action="close" class="remodal-close"></button>
+                    <h1>Filter groups number</h1>
+                    
+                    <div class="remodal_content">    <p>This value set the number of "<b>Filter groups columns</b>" in file, example file with <b><u>3</u></b> "<b>Filter groups number</b>" (columns marked in red):</p>
+    <img style="width: 605px;" src="https://devmanextensions.com/opencart_admin/ext_ie_pro/img/excel_example_number_filter_groups.jpg">
+</div>
+                    <br>
+                    
+                    
+                </div>
+            </div></div><div class="col-md-4 form-group-columns profile_import profile_export configuration products type_text" ><label class=" control-label">Filters number for each filter group</label><div class=""><input placeholder="Filters number for each filter group" id="import_xls_filter_number" name="import_xls_filter_number" type="text" value="0" class="form-control"/><a href="javascript:{}" data-remodal-target="profile_import_filter_number"><b>IMPORTANT</b>: Click to read!</a>
+                <div class="remodal profile_import_filter_number" data-remodal-id="profile_import_filter_number">
+                    <button data-remodal-action="close" class="remodal-close"></button>
+                    <h1>Filters number for each filter group</h1>
+                    
+                    <div class="remodal_content">    <p>This value set the number of "<b>Filters columns for each filter group</b>" in file, example file with <b><u>1</u></b> "<b>Filters number for each filter group</b>" (columns marked in red):</p>
+    <img style="width: 605px;" src="https://devmanextensions.com/opencart_admin/ext_ie_pro/img/excel_example_number_filters.jpg">
+</div>
+                    <br>
+                    
+                    
+                </div>
+            </div></div><div class="col-md-4 form-group-columns profile_import profile_export configuration products type_text" ><label class=" control-label">Downloads number</label><div class=""><input placeholder="Downloads number" id="import_xls_download_number" name="import_xls_download_number" type="text" value="0" class="form-control"/><a href="javascript:{}" data-remodal-target="profile_import_download_number"><b>IMPORTANT</b>: Click to read!</a>
+                <div class="remodal profile_import_download_number" data-remodal-id="profile_import_download_number">
+                    <button data-remodal-action="close" class="remodal-close"></button>
+                    <h1>Downloads number</h1>
+                    
+                    <div class="remodal_content">    <p>This value set the number of "<b>Downloads columns</b>" in file, example file with <b><u>1</u></b> "<b>Downloads number</b>" (columns marked in red):</p>
+    <img style="width: 605px;" src="https://devmanextensions.com/opencart_admin/ext_ie_pro/img/excel_example_number_downloads.jpg">
+</div>
+                    <br>
+                    
+                    
+                </div>
+            </div></div><div class="form-group profile_export configuration generic type_legend" ><div class="col-md-12"><legend style="margin-top: 17px;"><i class="fa fa-sort"></i>Sort order to export (optional)</legend><div style="clear:both;"></div></div></div><div class="sort_order_configuration col-md-12"></div><div class="form-group profile_export configuration products type_legend" ><div class="col-md-12"><legend style="margin-top: 17px;"><i class="fa fa-filter"></i>Quick product filters</legend><div style="clear:both;"></div></div></div><div class="col-md-4 form-group-columns profile_export configuration products no_refresh_columns type_select" ><label class=" control-label">Categories<span data-toggle="tooltip" data-html="true" title="(Nothing selected = All categories) The system will export products whose categories are one of the categories marked."></span></label><div class=""><select multiple="multiple" data-actions-box="true" name="import_xls_quick_filter_category_ids[]" class="selectpicker form-control" data-live-search="true"><option value="170" data-optionposition="0">Telas por nombre</option><option value="171" data-optionposition="1">Telas por uso</option><option value="59" data-optionposition="2">Moda</option><option value="172" data-optionposition="3">Blanco</option><option value="173" data-optionposition="4">Ofertas</option></select></div></div><div class="col-md-4 form-group-columns profile_export configuration products no_refresh_columns type_select" ><label class=" control-label">Manufacturers<span data-toggle="tooltip" data-html="true" title="(Nothing selected = All manufacturers) The system will export products whose manufacturer are one of the manufacturers marked."></span></label><div class=""><select multiple="multiple" data-actions-box="true" name="import_xls_quick_filter_manufacturer_ids[]" class="selectpicker form-control" data-live-search="true"></select></div></div><div class="form-group profile_export configuration generic type_legend" ><div class="col-md-12"><legend style="margin-top: 17px;"><i class="fa fa-filter"></i>Filters configuration</legend><div style="clear:both;"></div></div></div><div class="profile_export configuration generic filters_configuration"></div><div class="form-group profile_export profile_import configuration generic type_legend" ><div class="col-md-12"><legend style="margin-top: 17px;"><i class="fa fa-columns"></i>Columns mapping</legend><div style="clear:both;"></div></div></div><div class="profile_export profile_import configuration generic columns_configuration col-md-12"></div><div class="form-group profile_import profile_export configuration generic profile_name type_text" ><label class="col-md-2 control-label">Profile name</label><div class="col-md-10"><input placeholder="Profile name" id="import_xls_profile_name" name="import_xls_profile_name" type="text" value="" class="form-control"/></div></div><div class="form-group profile_import type_button" ><label class="col-md-2 control-label">Save import profile</label><div class="col-md-10"><a onclick="profile_save('import');" class="button"><i class="fa fa-floppy-o"></i> Save import profile</a></div></div><div class="form-group profile_export type_button" ><label class="col-md-2 control-label">Save export profile</label><div class="col-md-10"><a onclick="profile_save('export');" class="button"><i class="fa fa-floppy-o"></i> Save export profile</a></div></div><div class="form-group profile_import button_delete_profile type_button" ><label class="col-md-2 control-label">Delete import profile</label><div class="col-md-10"><a onclick="profile_delete('import');" class="button danger"><i class="fa fa-trash"></i> Delete import profile</a></div></div><div class="form-group profile_export button_delete_profile type_button" ><label class="col-md-2 control-label">Delete export profile</label><div class="col-md-10"><a onclick="profile_delete('export');" class="button danger"><i class="fa fa-trash"></i> Delete export profile</a></div></div></div><div class="tab-pane" id="tab-custom-fields"><p style="font-size:18px; font-weight: bold;"><i class="fa fa-spinner fa-pulse"></i>Working in Custom fields, will be ready soon as possible.<br>This will be AN OPTIONAL COMPONENT that will have to be purchased to add to Import/Export PRO.</p></div><div class="tab-pane" id="tab-cron-jobs"><center><h2>Execute your Import/Export profiles automatically when you want!</h2></center>
+
+<style>
+    @import url('https://fonts.googleapis.com/css?family=Bangers');
+    a.btn.btn-primary.button_add_to_cart
+    {
+        font-family: Bangers;
+        color: #000;
+        border-color: #97c900;
+        background: #b0eb00; /* Old browsers */
+        background: -moz-linear-gradient(top, #b0eb00 0%, #98ca00 100%); /* FF3.6-15 */
+        background: -webkit-linear-gradient(top, #b0eb00 0%,#98ca00 100%); /* Chrome10-25,Safari5.1-6 */
+        background: linear-gradient(to bottom, #b0eb00 0%,#98ca00 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b0eb00', endColorstr='#98ca00',GradientType=0 ); /* IE6-9 */
+        width: 100%;
+        height: 62px;
+        font-size: 28px;
+        line-height: 49px;
+        margin-top: 20px;
+    }
+    a.btn.btn-primary.button_add_to_cart:hover
+    {
+        background: #98ca00; /* Old browsers */
+        background: -moz-linear-gradient(top, #98ca00 0%, #b0eb00 100%); /* FF3.6-15 */
+        background: -webkit-linear-gradient(top, #98ca00 0%,#b0eb00 100%); /* Chrome10-25,Safari5.1-6 */
+        background: linear-gradient(to bottom, #98ca00 0%,#b0eb00 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#98ca00', endColorstr='#b0eb00',GradientType=0 ); /* IE6-9 */
+    }
+
+    a.btn.btn-primary{
+        width: 100%;
+    }
+</style>
+
+<script type="text/javascript">
+    function purchase(units, link) {
+        var url = "https://devmanextensions.com/opencart_export_import_pro/"+link+"/"+units;
+        window.open(url, '_blank');
+    }
+</script>
+
+<div style="clear:both; height: 30px;"></div>
+<div class="row">
+    <div class="col-md-4">
+        <div class="cart">
+            <label>What do you need?</label>
+            <select class="form-control quantity_con_jobs" name="units">
+                                                                                    <option value="1">Single domain - $49.99</option>
+                                                                                                                                <option value="2">2 Domains - 20% discount $39.99 - Total: $79.98</option>
+                                                                                                                                <option value="3">3 Domains - 23% discount $38.49 - Total: $115.47</option>
+                                                                                                                                <option value="4">4 Domains - 25% discount $37.49 - Total: $149.96</option>
+                                                                                                                                <option value="5">5 Domains - 28% discount $35.99 - Total: $179.95</option>
+                                                                                                                                <option value="6">6 Domains - 30% discount $34.99 - Total: $209.94</option>
+                                                                                                                                <option value="7">7 Domains - 32% discount $33.99 - Total: $237.93</option>
+                                                                                                                                <option value="8">8 Domains - 35% discount $32.49 - Total: $259.92</option>
+                                                                                                                                <option value="9">9 Domains - 37% discount $31.49 - Total: $283.41</option>
+                                                                                                                                <option value="10">10 Domains - 40% discount $29.99 - Total: $299.90</option>
+                                                </select>
+            <a href="javascript:{}" onclick="purchase($('select.quantity_con_jobs').val(), 'cron_purchase');" class="btn btn-primary button_add_to_cart"><i class="fa fa-shopping-basket"></i>Purchase now!</a>
+        </div>
+    </div>
+    <div class="col-md-8">
+        <p>With this <b>extra complement</b> you will can create <b>CRON Jobs</b> to put these in your server configuration, by this way, your server auto launches Import/Export profiles when you want. (All days at 00:00, all days at 00:00, 06:00, 12:00..., One time per week....)</p>
+        <p>This can be useful when:
+            <ol>
+                <li>You are <b>updating your shop</b> connecting with <b>external vendor</b> that is giving his products in a file/url.</li>
+                <li>You are <b>sending your products</b> from your shop to another extenal plataform or vendor.</li>
+                <li>You want <b>save automatically backups</b> of your products, categories, orders, options, attributes...</li>
+            </ol>
+        </p>
+    </div>
+</div></div><div class="tab-pane" id="tab-migrations-or-backups"><div class="form-group type_legend" ><div class="col-md-12"><legend><i class="fa fa-download"></i><b>EXPORT</b>: Export all store data. Use this option for backup or to be imported by another OpenCart store.</legend><div style="clear:both;"></div></div></div><div class="form-group type_select" ><label class="col-md-2 control-label">Destination</label><div class="col-md-10"><select name="import_xls_destiny" class="selectpicker form-control" data-live-search="true"><option value="" data-optionposition="0">This is a backup, not a migration.</option><option value="1" data-optionposition="1">Opencart 1.5.x</option><option value="2" data-optionposition="2">Opencart 2.x</option><option value="3" data-optionposition="3">Opencart 3.x</option></select></div></div><div class="form-group type_select" ><label class="col-md-2 control-label">Format</label><div class="col-md-10"><select name="import_xls_format" class="selectpicker form-control" data-live-search="true"><option value="xlsx" data-optionposition="0">.xlsx</option><option value="ods" data-optionposition="1">.ods</option><option value="xml" data-optionposition="2">.xml</option></select></div></div><div class="form-group type_boolean" ><label class="col-md-2 control-label">Select all categories</label><div class="col-md-10"><label class="checkbox_container"><input  onChange="migration_select_all_categories($(this).is(':checked'));" name="import_xls_select_all" type="checkbox" class="ios-switch green" value="1"/><div><div></div></div></label></div></div><div class="col-md-2 form-group-columns profile_export_category type_boolean" ><label class=" control-label">Affiliates</label><div class=""><label class="checkbox_container"><input  name="import_xls_exportcat_affiliates" type="checkbox" class="ios-switch green" value="1"/><div><div></div></div></label></div></div><div class="col-md-2 form-group-columns profile_export_category type_boolean" ><label class=" control-label">Attribute groups</label><div class=""><label class="checkbox_container"><input  name="import_xls_exportcat_attribute_groups" type="checkbox" class="ios-switch green" value="1"/><div><div></div></div></label></div></div><div class="col-md-2 form-group-columns profile_export_category type_boolean" ><label class=" control-label">Attributes</label><div class=""><label class="checkbox_container"><input  name="import_xls_exportcat_attributes" type="checkbox" class="ios-switch green" value="1"/><div><div></div></div></label></div></div><div class="col-md-2 form-group-columns profile_export_category type_boolean" ><label class=" control-label">Banners</label><div class=""><label class="checkbox_container"><input  name="import_xls_exportcat_banners" type="checkbox" class="ios-switch green" value="1"/><div><div></div></div></label></div></div><div class="col-md-2 form-group-columns profile_export_category type_boolean" ><label class=" control-label">Categories</label><div class=""><label class="checkbox_container"><input  name="import_xls_exportcat_categories" type="checkbox" class="ios-switch green" value="1"/><div><div></div></div></label></div></div><div class="col-md-2 form-group-columns profile_export_category type_boolean" ><label class=" control-label">Countries</label><div class=""><label class="checkbox_container"><input  name="import_xls_exportcat_countries" type="checkbox" class="ios-switch green" value="1"/><div><div></div></div></label></div></div><div class="col-md-2 form-group-columns profile_export_category type_boolean" ><label class=" control-label">Coupons</label><div class=""><label class="checkbox_container"><input  name="import_xls_exportcat_coupons" type="checkbox" class="ios-switch green" value="1"/><div><div></div></div></label></div></div><div class="col-md-2 form-group-columns profile_export_category type_boolean" ><label class=" control-label">Currencies</label><div class=""><label class="checkbox_container"><input  name="import_xls_exportcat_currencies" type="checkbox" class="ios-switch green" value="1"/><div><div></div></div></label></div></div><div class="col-md-2 form-group-columns profile_export_category type_boolean" ><label class=" control-label">Custom fields</label><div class=""><label class="checkbox_container"><input  name="import_xls_exportcat_custom_fields" type="checkbox" class="ios-switch green" value="1"/><div><div></div></div></label></div></div><div class="col-md-2 form-group-columns profile_export_category type_boolean" ><label class=" control-label">Customer groups</label><div class=""><label class="checkbox_container"><input  name="import_xls_exportcat_customer_groups" type="checkbox" class="ios-switch green" value="1"/><div><div></div></div></label></div></div><div class="col-md-2 form-group-columns profile_export_category type_boolean" ><label class=" control-label">Customers</label><div class=""><label class="checkbox_container"><input  name="import_xls_exportcat_customers" type="checkbox" class="ios-switch green" value="1"/><div><div></div></div></label></div></div><div class="col-md-2 form-group-columns profile_export_category type_boolean" ><label class=" control-label">Addresses</label><div class=""><label class="checkbox_container"><input  name="import_xls_exportcat_addresses" type="checkbox" class="ios-switch green" value="1"/><div><div></div></div></label></div></div><div class="col-md-2 form-group-columns profile_export_category type_boolean" ><label class=" control-label">Downloads</label><div class=""><label class="checkbox_container"><input  name="import_xls_exportcat_downloads" type="checkbox" class="ios-switch green" value="1"/><div><div></div></div></label></div></div><div class="col-md-2 form-group-columns profile_export_category type_boolean" ><label class=" control-label">Filters</label><div class=""><label class="checkbox_container"><input  name="import_xls_exportcat_filters" type="checkbox" class="ios-switch green" value="1"/><div><div></div></div></label></div></div><div class="col-md-2 form-group-columns profile_export_category type_boolean" ><label class=" control-label">Filter groups</label><div class=""><label class="checkbox_container"><input  name="import_xls_exportcat_filter_groups" type="checkbox" class="ios-switch green" value="1"/><div><div></div></div></label></div></div><div class="col-md-2 form-group-columns profile_export_category type_boolean" ><label class=" control-label">Geo zones</label><div class=""><label class="checkbox_container"><input  name="import_xls_exportcat_geo_zones" type="checkbox" class="ios-switch green" value="1"/><div><div></div></div></label></div></div><div class="col-md-2 form-group-columns profile_export_category type_boolean" ><label class=" control-label">Informations</label><div class=""><label class="checkbox_container"><input  name="import_xls_exportcat_informations" type="checkbox" class="ios-switch green" value="1"/><div><div></div></div></label></div></div><div class="col-md-2 form-group-columns profile_export_category type_boolean" ><label class=" control-label">Languages</label><div class=""><label class="checkbox_container"><input  name="import_xls_exportcat_languages" type="checkbox" class="ios-switch green" value="1"/><div><div></div></div></label></div></div><div class="col-md-2 form-group-columns profile_export_category type_boolean" ><label class=" control-label">Layouts</label><div class=""><label class="checkbox_container"><input  name="import_xls_exportcat_layouts" type="checkbox" class="ios-switch green" value="1"/><div><div></div></div></label></div></div><div class="col-md-2 form-group-columns profile_export_category type_boolean" ><label class=" control-label">Lengths</label><div class=""><label class="checkbox_container"><input  name="import_xls_exportcat_lengths" type="checkbox" class="ios-switch green" value="1"/><div><div></div></div></label></div></div><div class="col-md-2 form-group-columns profile_export_category type_boolean" ><label class=" control-label">Locations</label><div class=""><label class="checkbox_container"><input  name="import_xls_exportcat_locations" type="checkbox" class="ios-switch green" value="1"/><div><div></div></div></label></div></div><div class="col-md-2 form-group-columns profile_export_category type_boolean" ><label class=" control-label">Manufacturers</label><div class=""><label class="checkbox_container"><input  name="import_xls_exportcat_manufacturers" type="checkbox" class="ios-switch green" value="1"/><div><div></div></div></label></div></div><div class="col-md-2 form-group-columns profile_export_category type_boolean" ><label class=" control-label">Marketings</label><div class=""><label class="checkbox_container"><input  name="import_xls_exportcat_marketings" type="checkbox" class="ios-switch green" value="1"/><div><div></div></div></label></div></div><div class="col-md-2 form-group-columns profile_export_category type_boolean" ><label class=" control-label">Modifications</label><div class=""><label class="checkbox_container"><input  name="import_xls_exportcat_modifications" type="checkbox" class="ios-switch green" value="1"/><div><div></div></div></label></div></div><div class="col-md-2 form-group-columns profile_export_category type_boolean" ><label class=" control-label">Options</label><div class=""><label class="checkbox_container"><input  name="import_xls_exportcat_options" type="checkbox" class="ios-switch green" value="1"/><div><div></div></div></label></div></div><div class="col-md-2 form-group-columns profile_export_category type_boolean" ><label class=" control-label">Option values</label><div class=""><label class="checkbox_container"><input  name="import_xls_exportcat_option_values" type="checkbox" class="ios-switch green" value="1"/><div><div></div></div></label></div></div><div class="col-md-2 form-group-columns profile_export_category type_boolean" ><label class=" control-label">Orders</label><div class=""><label class="checkbox_container"><input  name="import_xls_exportcat_orders" type="checkbox" class="ios-switch green" value="1"/><div><div></div></div></label></div></div><div class="col-md-2 form-group-columns profile_export_category type_boolean" ><label class=" control-label">Products</label><div class=""><label class="checkbox_container"><input  name="import_xls_exportcat_products" type="checkbox" class="ios-switch green" value="1"/><div><div></div></div></label></div></div><div class="col-md-2 form-group-columns profile_export_category type_boolean" ><label class=" control-label">Specials</label><div class=""><label class="checkbox_container"><input  name="import_xls_exportcat_specials" type="checkbox" class="ios-switch green" value="1"/><div><div></div></div></label></div></div><div class="col-md-2 form-group-columns profile_export_category type_boolean" ><label class=" control-label">Discounts</label><div class=""><label class="checkbox_container"><input  name="import_xls_exportcat_discounts" type="checkbox" class="ios-switch green" value="1"/><div><div></div></div></label></div></div><div class="col-md-2 form-group-columns profile_export_category type_boolean" ><label class=" control-label">Recurrings</label><div class=""><label class="checkbox_container"><input  name="import_xls_exportcat_recurrings" type="checkbox" class="ios-switch green" value="1"/><div><div></div></div></label></div></div><div class="col-md-2 form-group-columns profile_export_category type_boolean" ><label class=" control-label">Profiles</label><div class=""><label class="checkbox_container"><input  name="import_xls_exportcat_profiles" type="checkbox" class="ios-switch green" value="1"/><div><div></div></div></label></div></div><div class="col-md-2 form-group-columns profile_export_category type_boolean" ><label class=" control-label">Returns</label><div class=""><label class="checkbox_container"><input  name="import_xls_exportcat_returns" type="checkbox" class="ios-switch green" value="1"/><div><div></div></div></label></div></div><div class="col-md-2 form-group-columns profile_export_category type_boolean" ><label class=" control-label">Reviews</label><div class=""><label class="checkbox_container"><input  name="import_xls_exportcat_reviews" type="checkbox" class="ios-switch green" value="1"/><div><div></div></div></label></div></div><div class="col-md-2 form-group-columns profile_export_category type_boolean" ><label class=" control-label">Seo urls</label><div class=""><label class="checkbox_container"><input  name="import_xls_exportcat_seo_urls" type="checkbox" class="ios-switch green" value="1"/><div><div></div></div></label></div></div><div class="col-md-2 form-group-columns profile_export_category type_boolean" ><label class=" control-label">Statistics</label><div class=""><label class="checkbox_container"><input  name="import_xls_exportcat_statistics" type="checkbox" class="ios-switch green" value="1"/><div><div></div></div></label></div></div><div class="col-md-2 form-group-columns profile_export_category type_boolean" ><label class=" control-label">Stock statuses</label><div class=""><label class="checkbox_container"><input  name="import_xls_exportcat_stock_statuses" type="checkbox" class="ios-switch green" value="1"/><div><div></div></div></label></div></div><div class="col-md-2 form-group-columns profile_export_category type_boolean" ><label class=" control-label">Stores</label><div class=""><label class="checkbox_container"><input  name="import_xls_exportcat_stores" type="checkbox" class="ios-switch green" value="1"/><div><div></div></div></label></div></div><div class="col-md-2 form-group-columns profile_export_category type_boolean" ><label class=" control-label">Taxes</label><div class=""><label class="checkbox_container"><input  name="import_xls_exportcat_taxes" type="checkbox" class="ios-switch green" value="1"/><div><div></div></div></label></div></div><div class="col-md-2 form-group-columns profile_export_category type_boolean" ><label class=" control-label">Uploads</label><div class=""><label class="checkbox_container"><input  name="import_xls_exportcat_uploads" type="checkbox" class="ios-switch green" value="1"/><div><div></div></div></label></div></div><div class="col-md-2 form-group-columns profile_export_category type_boolean" ><label class=" control-label">Vouchers</label><div class=""><label class="checkbox_container"><input  name="import_xls_exportcat_vouchers" type="checkbox" class="ios-switch green" value="1"/><div><div></div></div></label></div></div><div class="col-md-2 form-group-columns profile_export_category type_boolean" ><label class=" control-label">Weights</label><div class=""><label class="checkbox_container"><input  name="import_xls_exportcat_weights" type="checkbox" class="ios-switch green" value="1"/><div><div></div></div></label></div></div><div class="col-md-2 form-group-columns profile_export_category type_boolean" ><label class=" control-label">Zones</label><div class=""><label class="checkbox_container"><input  name="import_xls_exportcat_zones" type="checkbox" class="ios-switch green" value="1"/><div><div></div></div></label></div></div><div style="clear:both; height: 10px;"></div><div class="form-group type_button" ><label class="col-md-2 control-label">Launch export process</label><div class="col-md-10"><a onclick="open_manual_notification('Not available in trial', 'danger')" class="button"><i class="fa fa-rocket"></i> Launch export process</a></div></div><div class="form-group type_legend" ><div class="col-md-12"><legend><i class="fa fa-upload"></i><b>IMPORT</b>: Import file from another Opencart store or restore a full backup.</legend><div style="clear:both;"></div></div></div><div class="form-group type_button" ><label class="col-md-2 control-label">Upload file</label><div class="col-md-10"><a onclick="$(this).next('input').click();" class="button button_import_migration"><i class="fa fa-upload"></i> Upload file<span></span></a><input onchange="readURL($(this));" name="migration_file" type="file" style="display:none;"></div></div><div class="form-group type_button" ><label class="col-md-2 control-label">Launch import process</label><div class="col-md-10"><a onclick="open_manual_notification('Not available in trial', 'danger')" class="button"><i class="fa fa-rocket"></i> Launch import process</a><br><a href="javascript:{}" data-remodal-target="migration_import_warning_message"><b style="color:#f00;">IMPORTANT: CLICK HERE BEFORE LAUNCHING THE IMPORT PROCESS</b></a>
+                <div class="remodal migration_import_warning_message" data-remodal-id="migration_import_warning_message" data-remodal-options="hashTracking: false">
+                    <button data-remodal-action="close" class="remodal-close"></button>
+                    <h1>Important message</h1>
+                    
+                    <div class="remodal_content">    <p></p><b>BE CAREFUL</b>: during the migration process, all tables will be emptied before data is imported. Before you start that process, you should do a <b>full export</b> from this same tab and <b>full mysql database backup (.sql file)</b>.</p>
+
+    <p>If you are migrating from 1.5.x to 2.x or 3.x it is possible you may get a language-related warning message at the end. Simply go to "<b>System > Localisation > Languages</b>", edit each language and press click "Save".</b></p></div>
+                    <br>
+                    
+                    <button data-remodal-action="confirm" class="remodal-confirm">Confirm</button>
+                </div>
+            </div></div></div><div class="tab-pane" id="tab-faq"><h2 class="faq_title" onclick="toggle_faq($(this))">1.- The process of import, export or migration is frozen or I receive some type of error.</h2><div class="faq_description"><a href="javascript:{}" data-remodal-target="export_import_remodal_server_config">Here all information</a></div><h2 class="faq_title" onclick="toggle_faq($(this))">2.- How do I install  this extension?</h2><div class="faq_description">Visit <a href="https://devmanextensions.com/install-iepro" target="_blank">next link</a>.</div><h2 class="faq_title" onclick="toggle_faq($(this))">3.- How to do a version migration?</h2><div class="faq_description"></div><h2 class="faq_title" onclick="toggle_faq($(this))">4.- Are CRON jobs and custom fields functionalities free?</h2><div class="faq_description">No, are extra functionalities to users that need these, can be acquire from his own tabs.</div><h2 class="faq_title" onclick="toggle_faq($(this))">5.- Error “Undefined index: x” when I try export/import</h2><div class="faq_description">Open a support ticket from “<b>Support</b>” tab, we will attend you asap!</div><h2 class="faq_title" onclick="toggle_faq($(this))">6.-  If I am doing a migration, do I need to buy an extra license?</h2><div class="faq_description">No, in this case you can say us your temporal domain where you will import the migration, we will add this domain to your license.</div><h2 class="faq_title" onclick="toggle_faq($(this))">7.-  If I have a development site, do I need to buy an extra license?</h2><div class="faq_description">No, in this case you can say us your DEV domai, we will add this domain to your license.</div><h2 class="faq_title" onclick="toggle_faq($(this))">8.- CURL error when try validate my license</h2><div class="faq_description"><a target="_blank" href="https://curl.haxx.se/libcurl/c/libcurl-errors.html">In this link</a> you can find all CURL error numbers with his descriptions. The most common errors are 28 or 7. Are caused by a firewall in your server, you have to put in contact with your hosting support team and explain they about this error. Our server is "open" to all requests from our clients. If you need add our IP to your "whitelist" you have to use: <b>217.61.128.42</b></div><h2 class="faq_title" onclick="toggle_faq($(this))">9.-  I have a large number of products, is there a maximum allowed in the import, export and migration processes?</h2><div class="faq_description">We worked hard to achieve the best optimization in all possible processes, however, the limit is always on the server where you are using this extension. Under "Launch profile" button, in administration panel, you can find possible solutions in case of exceeding the limits of the server in the processes.
+
+It is also possible to execute your processes through CRONS Jobs, that way there is no limit.
+</div><h2 class="faq_title" onclick="toggle_faq($(this))">10.- I have other extensions that have added fields to my products, categories, etc. Can I include them in the import, export and migration processes?</h2><div class="faq_description">Yes, for this you must acquire the extra complement “Custom fields”, placed in tab “Custom fields” in administration area of the extension.</div><h2 class="faq_title" onclick="toggle_faq($(this))">11.- How manage product options?</h2><div class="faq_description">The best way to see how to manage them, is to export a product with options and see how it is generated, here we can see an example:
+
+As you can see in <a href="http://devmanextensions.com/images/extensions/ie-pro/Product-options.xlsx">this example file</a>, the first row contains the main data of the product, and the subsequent rows (options) you only see data in the “Option XXXX” columns. In this way the system will detect that it is about product options and not new products.</div><h2 class="faq_title" onclick="toggle_faq($(this))">12.-  If I import a file that contains product data, and these in turn contain categories, filters, manufacturers, and other attributes that are not currently part of the store, will these be created?</h2><div class="faq_description">Yes, all data that does not exist in your store will be automatically created.</div><h2 class="faq_title" onclick="toggle_faq($(this))">13.-  Is this extension compatible with multilanguage and multistore?</h2><div class="faq_description">Yes, the system will rename your columns compatible with multilanguage and multistore in the following way.
+<ul><li>Name en_gb</li><li>Name es_es</li><li>Name nl_nl</li></ul>
+Multistore columns:
+<ul><li>SEO Url 0</li><li>SEO Url 1</li><li>SEO Url 2</li></ul>
+Multilanguage and multistore columns:
+<ul><li>SEO Url 0 en_gb</li><li>SEO Url 1 en_gb</li><li>SEO Url 2 en_gb</li></ul></div><h2 class="faq_title" onclick="toggle_faq($(this))">14.- Can I change the name to the columns for the import and export processes?</h2><div class="faq_description">Yes, you can assign custom column names in your export/import profiles with complete freedom.</div><h2 class="faq_title" onclick="toggle_faq($(this))">15.- Will it work with my custom theme?</h2><div class="faq_description">Yes, this extension is only used in the administration area, so it will not affect the theme used in the frontend.</div><h2 class="faq_title" onclick="toggle_faq($(this))">16.- “PHP Warning:  realpath(): open_basedir restriction in effect. File(/tmp) is not within the allowed path(s):”</h2><div class="faq_description"><b>Reason</b>: Opencart is searching for your “/tmp” folder but it is not properly configured or does not have write permissions.
+<b>Solution</b>: Change the php directive “open_basedir” to some location with read and write permissions.</div><h2 class="faq_title" onclick="toggle_faq($(this))">17.- I assigned images in my import file, I have uploaded the image files, but they are not displayed:</h2><div class="faq_description">Check that the image file name is identical to the one you put in your import file (case sensitive). Check that you have put the correct routes and have uploaded the images to the correct directories:
+
+<b>Opencart 1.5.X:</b>
+<ull><li>Example of path: data/cars/tesla_model_3.jpg</li><li>The image file has to be uploaded: /image/data/cars/tesla_model_3.jpg</li></ul>
+<b>Opencart 2.X and 3.X:</b>
+<ul><li>Example of path: catalog/cars/tesla_model_3.jpg</li><li>The image file has to be uploaded: /image/catalog/cars/tesla_model_3.jpg</li></ul>
+</div><h2 class="faq_title" onclick="toggle_faq($(this))">18.- I get an error trying to convert my database to the “InnoDB” engine</h2><div class="faq_description"><p><b>Error: The used table type doesn't support FULLTEXT indexes. Error No: 1214. ALTER TABLE `TABLENAME` ENGINE=INNODB</b></p>
+<p><b>Reason</b>: If you receive this error is for some external extension created a table in your database that has some field of type “FULLTEXT”, this type of field is not compatible with InnoDB.</p>
+<p><b>Solution</b>: Change the field type to “TEXT”, the database will not suffer any error nor the field in question.</p>
+<br>
+<p><b>Error: Specified key was too long; max key length is 767 bytes - Error No: 1071</b></p>
+<p><b>Reason</b>: 767 bytes is the stated prefix limitation for InnoDB tables in MySQL version 5.6 (and prior versions).</p>
+<p><b>Solution</b>: Open your promeblatic table and change VARCHAR field limits to 255</p></div>
+					<style type="text/css">
+						h2.faq_title
+						{
+							position: relative;
+						    float: left;
+						    width: 100%;
+						    border-bottom: 1px solid #ddd;
+						    padding-bottom: 15px;
+						    font-size: 17px;
+						    font-weight: bold;
+						    padding-top: 15px;
+						    margin-bottom: 0px;
+						}
+						h2.faq_title:hover,
+						h2.faq_title.openned
+						{
+							cursor: pointer;
+							background: #eee;
+						}
+						h2.faq_title:before
+						{
+							font-family: "FontAwesome";
+						    content: "\f150";
+						    margin-right: 10px;
+						    font-size: 11px;
+						    top: -3px;
+						    position: relative;
+						    font-weight: normal;
+						    margin-left: 10px;
+						}
+						h2.faq_title.openned:before
+						{
+							content: "\f151";
+						}
+						div.faq_description
+						{
+							display: none;
+						    margin-bottom: 0px;
+						    position: relative;
+						    float: left;
+						    width: 100%;
+						    margin-top: 20px;
+						    border-bottom: 1px solid #eee;
+						    padding-bottom: 15px;
+						    padding-left: 20px;
+						    padding-right: 30px;
+						    font-size: 14px;
+
+						}
+						h2.faq_title.openned + div.faq_description
+						{
+							display: block;
+						}
+					</style>
+					<script type="text/javascript">
+						function toggle_faq(heading_pressed)
+						{
+							heading_pressed.toggleClass('openned');
+						}
+					</script>	
+	        	</div><div class="tab-pane" id="tab-support"><div class="form-group type_html_code" ><div class="col-md-12"><center><img src="https://devmanextensions.com/images/extensions/support_status.jpg?v=20181127171146" alt="" class="img-responsive"></center><br></div></div><div class="form-group type_text" ><label class="col-md-2 control-label">Your name:</label><div class="col-md-10"><input placeholder="Your name:" id="import_xls_name" name="import_xls_name" type="text" value="" class="form-control"/></div></div><div class="form-group type_text" ><label class="col-md-2 control-label">Your email:</label><div class="col-md-10"><input placeholder="Your email:" id="import_xls_email" name="import_xls_email" type="text" value="info@amancayweb.com" class="form-control"/></div></div><div class="form-group type_text" ><label class="col-md-2 control-label">Subject:</label><div class="col-md-10"><input placeholder="Subject:" id="import_xls_subject" name="import_xls_subject" type="text" value="" class="form-control"/></div></div><div class="form-group type_textarea" ><label class="col-md-2 control-label">Tell me your problem:</label><div class="col-md-10"><textarea style="height: 150px;"  placeholder="Make easy! Give as much information as possible about your problem." class="form-control" id="import_xls_text" name="import_xls_text" /></textarea></div></div><div class="form-group type_textarea" ><label class="col-md-2 control-label">FTP and Admin:</label><div class="col-md-10"><textarea style="height: 150px;"  placeholder="If to solve your problem, I will need connect to your shop, create me a temporary FTP account and temporary Admin Opencart user." class="form-control" id="import_xls_conections" name="import_xls_conections" /></textarea></div></div><div class="form-group type_button" ><label class="col-md-2 control-label">Send ticket</label><div class="col-md-10"><a onclick="send_ticket();" class="button"><i class="fa fa-ticket"></i> Send ticket</a></div></div></div><div class="tab-pane" id="tab-changelog---downloads"><ul><li style="list-style:none; margin-bottom:5px;"><b><u>Version 8.2.3 - 16/11/2018</u></b><ul><li>Bug fixed with default values like zero "0"</li><li>Error fixed in import process with splitted values on fields that require a conversion id like "Categories".</li></ul></li><li style="list-style:none; margin-bottom:5px;"><b><u>Version 8.2.2 - 09/11/2018</u></b><ul><li>Users less than 1.5.6.4: Bug fixed to export products and categories.</li></ul></li><li style="list-style:none; margin-bottom:5px;"><b><u>Version 8.2.1 - 06/11/2018</u></b><ul><li>Generenal extension texts improved.</li><li>Little bug fixed in import CSV. Problem with custom delimiter.</li></ul></li><li style="list-style:none; margin-bottom:5px;"><b><u>Version 8.2.0 - 06/11/2018</u></b><ul><li>TRIAL VERSION - Increased to 50 elements to import/export process.</li><li>Little fix in product related error message.</li><li>Product quick filter, put all category branches in "Category" filter</li></ul></li><li style="list-style:none; margin-bottom:5px;"><b><u>Version 8.1.9 - 03/11/2018</u></b><ul><li>Minor errors fixed in export/import processes</li><li>Added possibility download empty file to import/export profiles</li><li>New XML column mapping possibilities in Import processes</li><li>Added more filters to date fields: Last X years, Last X months, Last X days, Last X hours, Last X minutes.</li><li>Error fixed in migration "banner_image" table. Export from 1.5 to 2.x or 3.x</li><li>Little bug fixed in export profile with conditions in boolean fields</li><li>Export multibranches categories tree compatibility</li></ul></li><li style="list-style:none; margin-bottom:5px;"><b><u>Version 8.1.8 - 29/10/2018</u></b><ul><li>Minor errors fixed.</li><li>OCStore: Bug fixed in manufacturer creation.</li><li>Mijoshop: Added compatibility.</li></ul></li><li style="list-style:none; margin-bottom:5px;"><b><u>Version 8.1.7 - 25/10/2018</u></b><ul><li>Bug fixed exporting condition "Not contain".</li><li>Bud fixed importing categories to users 1.5 and 2.X.</li><li>Bug fixed reading special xml files not UTF8 encoded.</li><li>Added "Date added" & "Date modified" to export/import products.</li></ul></li><li style="list-style:none; margin-bottom:5px;"><b><u>Version 8.1.6 - 23/10/2018</u></b><ul><li><b>Bug fixed in XML library</b>. Errors appeared with some XML types in import/export processes.</li></ul></li><li style="list-style:none; margin-bottom:5px;"><b><u>Version 8.1.5 - 22/10/2018</u></b><ul><li><b>Add compatibility with extra complement CRON Jobs - PRICE $99.99</b></li><li>Minor bugs fixed.</li></ul></li><li style="list-style:none; margin-bottom:5px;"><b><u>Version 8.1.0 - 19/10/2018</u></b><ul><li><b>REPORTED BUGS FIXED IN EXPORT/IMPORT PROCESSED</b></li><li>Added "Path to downloaded images" to import profile.</li><li>Added sort order to all export profiles.</li><li>Added export "Full link" to image fields for export processes.</li><li>Added "texts" instead of IDs in product fields: "Out of status", "Weight class", "Length class", "Tax class" and "Layout" in export/import processes.</li><li>Added possibility put custom value to "no" and "yes" boolean columns in export/import processes.</li><li>Added "Quick filters" to export product profiles, you will can choose category names, manufacturer names from selectors.</li><li>Added "Product ID identificator" in "Product discounts" and "Product specials".</li><li>Added information error message to unexpected errors during import/export processes.</li><li>Added "Profit margin" to prices in import profiles to product creations.</li><li>Improved help information about related product data section.</li><li>Improved help information about "Strict update".</li><li>Added information help to "Default value" in columns configuration.</li><li>Improved export/import progress information.</li></ul></li><li style="list-style:none; margin-bottom:5px;"><b><u>Version 8.0.0 - 10/10/2018</u></b><ul><li>We are very happy present new version! =)</li><li>Know all new features in extension page!</li><li><b style="color:f00">IMPORTANT TO OLD USERS:</b> Extension was refactoried, all custom works won't be compatible with this new version.</li></ul></li><li style="list-style:none; margin-bottom:5px;"><b><u>Version 7.7.8 - 31/08/2018</u></b><ul><li>Minor errors fixed in export/import processes</li></ul></li><li style="list-style:none; margin-bottom:5px;"><b><u>Version 7.7.7 - 22/08/2018</u></b><ul><li>Minor errors fixed in export/import processes</li></ul></li><li style="list-style:none; margin-bottom:5px;"><b><u>Version 7.7.6 - 19/07/2018</u></b><ul><li>Minor errors fixed</li></ul></li><li style="list-style:none; margin-bottom:5px;"><b><u>Version 7.7.5 - 09/07/2018</u></b><ul><li>ocStore (Russian Opencart) compatibility</li><li>Little bug fixed in exports/imports products</li></ul></li><li style="list-style:none; margin-bottom:5px;"><b><u>Version 7.7.1 - 02/07/2018</u></b><ul><li>Little bug fixed: Cant import xlsx products file from first tab, appeared an empty error.</li></ul></li><li style="list-style:none; margin-bottom:5px;"><b><u>Version 7.7.0 - 01/07/2018</u></b><ul><li>Added CSV in Export/Import in products</li><li>Added XML format in Export/Import backups</li><li>Minor error fixed in export/import product. Recommended update.</li></ul></li><li style="list-style:none; margin-bottom:5px;"><b><u>Version 7.6.9 - 12/06/2018</u></b><ul><li>Minor error fixed in export/import product. Recommended update.</li></ul></li><li style="list-style:none; margin-bottom:5px;"><b><u>Version 7.6.8 - 16/05/2018</u></b><ul><li>Minor errors fixed</li></ul></li><li style="list-style:none; margin-bottom:5px;"><b><u>Version 7.6.7 - 25/04/2018</u></b><ul><li>Fixed some scapes database values in INSERT queries</li></ul></li><li style="list-style:none; margin-bottom:5px;"><b><u>Version 7.6.6 - 05/04/2018</u></b><ul><li>Fix error in SQL queries in database that aren't using Opencart prefix table.</li></ul></li><li style="list-style:none; margin-bottom:5px;"><b><u>Version 7.6.5 - 12/03/2018</u></b><ul><li>Bug fixed: Sometimes, in export/import process received a js error and process information stopped.</li></ul></li><li style="list-style:none; margin-bottom:5px;"><b><u>Version 7.6.4 - 08/03/2018</u></b><ul><li>Minor error fixed in export process.</li><li>Added manufacturers to extra imports/exports.</li><li>"Get images not found" move to individual process.</li></ul></li><li style="list-style:none; margin-bottom:5px;"><b><u>Version 7.6.3 - 07/03/2018</u></b><ul><li>Little bug fixed when tried download empty xlsx file</li></ul></li><li style="list-style:none; margin-bottom:5px;"><b><u>Version 7.6.2 - 06/03/2018</u></b><ul><li>Added export progress window.</li><li>Minor error fixed.</li></ul></li><li style="list-style:none; margin-bottom:5px;"><b><u>Version 7.6.1 - 05/03/2018</u></b><ul><li>Little bug fixed in SUM/REST Taxes</li></ul></li><li style="list-style:none; margin-bottom:5px;"><b><u>Version 7.6.0 - 24/02/2018</u></b><ul><li><b>We are very happy present the new version!!</b></li><li><b style="color:#ff0000;">IMPORTANT TO OLD USER:</b> New install tutorial, read tutorial.txt inside new .zip.</li><li>Compatible with native extension installer Opencart.</li><li>Full control of import process.</li><li>More compatible & estable.</li></ul></li><li style="list-style:none; margin-bottom:5px;"><b><u>Version 7.5.1 - 18/02/2018</u></b><ul><li>Bug fixed: Sort order column wasn't exporting.</li><li>Added <b>Stores</b> filter in export products.</li><li>Added <b>empty template</b> (empty excel, only with columns)</li><li>More controls in analyze files before import.</li></ul></li><li style="list-style:none; margin-bottom:5px;"><b><u>Version 7.5.0 - 13/02/2018</u></b><ul><li>Added Orders to "Extra exports", "Extra imports"</li><li>Little bug fixed to Opencart 3.x in SEO Urls</li></ul></li><li style="list-style:none; margin-bottom:5px;"><b><u>Version 7.4.6 - 10/02/2018</u></b><ul><li>Bug fixed reading data from cells that contains date formatted by excel.</li></ul></li><li style="list-style:none; margin-bottom:5px;"><b><u>Version 7.4.5 - 09/02/2018</u></b><ul><li>Added "template selector" to columns configuration.</li><li>Minor bugs fixed.</li></ul></li><li style="list-style:none; margin-bottom:5px;"><b><u>Version 7.4.0 - 05/02/2018</u></b><ul><li>Added discounts and specials by customer groups</li></ul></li><li style="list-style:none; margin-bottom:5px;"><b><u>Version 7.3.0 - 02/02/2018</u></b><ul><li>Added <b>XML format</b> in products export/import</li><li>Bug fixed in Google spreadsheets multilanguage columns</li></ul></li><li style="list-style:none; margin-bottom:5px;"><b><u>Version 7.2.1 - 24/01/2018</u></b><ul><li>Little error fixed in validate columns data in "Model" VS "Product ID" columns. False error in validation.</li></ul></li><li style="list-style:none; margin-bottom:5px;"><b><u>Version 7.2.0 - 08/01/2018</u></b><ul><li><b>NEW INTERFACE MORE INTUITIVE AND SIMPLE</b></li><li><b>Make custom filters to export datas!</b></li><li><b>More export/import datas</b></li><li>Added "<b>Product ID</b>" excel column</li><li>Added filter "<b>By product models</b>" in export products</li></ul></li><li style="list-style:none; margin-bottom:5px;"><b><u>Version 7.1.0 - 28/12/2017</u></b><ul><li><b>GOOGLE DRIVE STREADSHEETS COMPATILIBITY:</b> Import / Export Products.</li></ul></li><li style="list-style:none; margin-bottom:5px;"><b><u>Version 7.0.0 - 22/12/2017</u></b><ul><li><b>FULL STORE EXPORT/IMPORT ADDED TO OPENCART VERSION MIGRATIONS OR BACKUPS!!</b></li></ul></li><li style="list-style:none; margin-bottom:5px;"><b><u>Version 6.9.0 - 19/12/2017</u></b><ul><li><b>Customers, Customer addresses and Customer groups Export/Import added!</b></li></ul></li><li style="list-style:none; margin-bottom:5px;"><b><u>Version 6.8.0 - 18/12/2017</u></b><ul><li><b>Options/Option values Export/Import added!</b></li></ul></li><li style="list-style:none; margin-bottom:5px;"><b><u>Version 6.7.0 - 15/12/2017</u></b><ul><li><b>Filters export/import added!</b></li></ul></li><li style="list-style:none; margin-bottom:5px;"><b><u>Version 6.6.0 - 15/12/2017</u></b><ul><li><b>Attributes export/import added!</b></li></ul></li><li style="list-style:none; margin-bottom:5px;"><b><u>Version 6.5.0 - 14/12/2017</u></b><ul><li><b>New user interface!!</b></li><li><b>New panel that inform you of status of your import process</b></li><li><b>Working on new exports/imports</b>: customers, orders, options, attributes....</li></ul></li><li style="list-style:none; margin-bottom:5px;"><b><u>Version 6.2.5 - 12/12/2017</u></b><ul><li><b>Bug fixed:</b> In some shops, in middle of import process, your shop return XLSX file and import process not finish</li></ul></li><li style="list-style:none; margin-bottom:5px;"><b><u>Version 6.2.2 - 12/12/2017</u></b><ul><li><b>Little bug fixed:</b> PHP debug deleted when appear some error during import process.</li></ul></li><li style="list-style:none; margin-bottom:5px;"><b><u>Version 6.2.1 - 23/11/2017</u></b><ul><li><b>Little bug fixed</b>: Removed "NO FOUND" in descriptions after create new products.</li></ul></li><li style="list-style:none; margin-bottom:5px;"><b><u>Version 6.2.0 - 31/10/2017</u></b><ul><li><b>We broke the limits!</b> now you can choose numbers of Attributes, filters, categories, images, discounts and download that you want use in import/export processes.</li><li><b>Added more filters to export products system</b></li></ul></li><li style="list-style:none; margin-bottom:5px;"><b><u>Version 6.1.8 - 15/10/2017</u></b><ul><li>Opencart 3.x users: Fixed problem logout after validate license.</li></ul></li><li style="list-style:none; margin-bottom:5px;"><b><u>Version 6.1.7 - 07/10/2017</u></b><ul><li>Added basic rules to import new categories</li></ul></li><li style="list-style:none; margin-bottom:5px;"><b><u>Version 6.1.6 - 06/10/2017</u></b><ul><li>Little bug fixed in category import</li></ul></li><li style="list-style:none; margin-bottom:5px;"><b><u>Version 6.1.5 - 06/10/2017</u></b><ul><li>Removed button "Apply" and "Save changes" they do not serve</li><li>Validate license form only appear after login in opencart admin zone, while the session don't close, wont appear again.</li></ul></li><li style="list-style:none; margin-bottom:5px;"><b><u>Version 6.1.2 - 03/10/2017</u></b><ul><li>Repaired "Convert to innoDB" button. RECOMMENDED CLICK THIS BUTTON IT IF YOU DIDN'T CANT CONVERT YOUR DATABASE TO INNODB</li></ul></li><li style="list-style:none; margin-bottom:5px;"><b><u>Version 6.1.1 - 02/10/2017</u></b><ul><li>Little bug fixed in export "Undefined variable $lan"</li></ul></li><li style="list-style:none; margin-bottom:5px;"><b><u>Version 6.1.0 - 23/09/2017</u></b><ul><li><b>Added Export/Import categories!!</b></li><li>Now columns heading have <b>different colors</b> by groups/types</li></ul></li><li style="list-style:none; margin-bottom:5px;"><b><u>Version 6.0.0 - 08/09/2017</u></b><ul><li><b>Added multilanguage support to categories (ONLY COMPATIBLE WHEN CREATE NEW CATEGORIES)</b></li><li><b>Inserted new licenses system</b></li></ul></li><li style="list-style:none; margin-bottom:5px;"><b><u>Version 5.9.2 - 19/07/2017</u></b><ul><li><b>Export bug fixed</b>: All datas duplicated in export, sorry, I duplicated code in last version. Update now! ;)</li></ul></li><li style="list-style:none; margin-bottom:5px;"><b><u>Version 5.9.1 - 16/07/2017</u></b><ul><li><b>Bug fixed:</b> Little bug fixed in SEO URL multilanguage.</li></ul></li><li style="list-style:none; margin-bottom:5px;"><b><u>Version 5.9.0 - 12/07/2017</u></b><ul><li><b>Export orders added!</b></li><li><b>Export customers added!</b></li><li><b>Bug fixed:</b> If option value had "." (point) appeared errors trying import excel.</li></ul></li><li style="list-style:none; margin-bottom:5px;"><b><u>Version 5.8.0 - 05/07/2017</u></b><ul><li><b>OPENCART 3.X COMPATIBILITY!!</b></li><li><b>Export optimization</b></li><li>Remove the rule required in "*Name", not is neccesary</li><li>Escape character in field "model" in export filter, was crashing the query</li></ul></li><li style="list-style:none; margin-bottom:5px;"><b><u>Version 5.7.5 - 14/05/2017</u></b><ul><li><b>Rest or sum tax to price:</b> Bug fixed in operation.</li><li>Minor errors warnings php fixed.</li></ul></li><li style="list-style:none; margin-bottom:5px;"><b><u>Version 5.7.4.0 - 22/04/2017</u></b><ul><li><b>Bug fixed</b>: Option value with quantity 0 was 1 after import.</li><li>Added new column <b>"deleted"</b> if fill with "1" the product will be deleted</li><li>If column "quantity" is filled the system doesn't autocalculate it sum option values quantity.</li><li>Added "sort order" to option values.</li></ul></li><li style="list-style:none; margin-bottom:5px;"><b><u>Version 5.7.3.0 - 18/03/2017</u></b><ul><li>Added Downloads fields</li></ul></li><li style="list-style:none; margin-bottom:5px;"><b><u>Version 5.7.2.0 - 24/02/2017</u></b><ul><li><b>Bug fixed</b>: Duplicate attributes, attributes groups and others after new imports (ONLY if his names has symbols).</li></ul></li><li style="list-style:none; margin-bottom:5px;"><b><u>Version 5.7.1.1 - 13/02/2017</u></b><ul><li><b>SEO URL:</b> error fixed, in previous version the system was getting "Model" instead of "Name" to auto generate SEO URL.</li></ul></li><li style="list-style:none; margin-bottom:5px;"><b><u>Version 5.7.1.0 - 31/01/2017</u></b><ul><li>Now product options are controlled by <b>product models instead of product names</b>, with this we can import now differents products with same name.</li><li><b>Bug fixed:</b> Import system creates news categories with repeat names.</li></ul></li><li style="list-style:none; margin-bottom:5px;"><b><u>Version 5.7.0.1 - 28/01/2017</u></b><ul><li>Minor error fixed in category create process.</li></ul></li><li style="list-style:none; margin-bottom:5px;"><b><u>Version 5.7.0.0 - 22/01/2017</u></b><ul><li><b>Improved import/export process, x10 FATER!!!</b></li><li>Added columns configuration, <b>select columns that you want use!</b></li><li>Added history exported files</li><li>Added multi trees categories</li><li>Added export by product's quantity range</li><li><b>OLD CUSTOMER IMPORTANT:</b> If we done personal change to you is possible that this new versions won't be compatible.</li></ul></li><li style="list-style:none; margin-bottom:5px;"><b><u>Version 5.6.5.1 - 10/01/2017</u></b><ul><li><b>OC 1.5.x users:</b> Solved problem exporting by categories and manufacturers, filter wasn't working correctly.</li></ul></li><li style="list-style:none; margin-bottom:5px;"><b><u>Version 5.6.5.0 - 29/12/2016</u></b><ul><li>Added related product</li></ul></li><li style="list-style:none; margin-bottom:5px;"><b><u>Version 5.6.4.0 - 27/12/2016</u></b><ul><li>Added import configuration "Strict edit"</li><li>Added import configuration "Sum tax"</li><li>Added import configuration "Rest tax"</li><li>Minor import errors fixed</li></ul></li><li style="list-style:none; margin-bottom:5px;"><b><u>Version 5.6.3.0 - 15/09/2016</u></b><ul><li>Bug fixed: category empty in export proccess.</li><li>Compatibility with OC.2.3.X</li><li>Comparibility with OCMod</li></ul></li><li style="list-style:none; margin-bottom:5px;"><b><u>Version 5.6.2.0 - 11/09/2016</u></b><ul><li>Attributes multilanguage</li><li>Added option type "text"</li><li>Added multi store split by "|"</li><li>Added news import configurations (categories tree)</li><li>Fix export by model</li></ul></li><li style="list-style:none; margin-bottom:5px;"><b><u>Version 5.6.0.0 - 17/07/2016</u></b><ul><li><b>MULTILANGUAGE COMPATIBLE!!</b></li><li><b>Auto create category tree levels!!</b></li><li>Full reward points functionality</li></ul></li><li style="list-style:none; margin-bottom:5px;"><b><u>Version 5.5.0.0 - 12/06/2016</u></b><ul><li>Add new filters to export products.</li></ul></li><li style="list-style:none; margin-bottom:5px;"><b><u>Version 5.4.0.0 - 21/05/2016</u></b><ul><li>Add url support to images, the system download it and assign to product.</li><li>Add discounts</li></ul></li><li style="list-style:none; margin-bottom:5px;"><b><u>Version 5.3.0.1 - 10/05/2016</u></b><ul><li>Bug fixed in options when edit a existing product, the options were deleted.</li></ul></li><li style="list-style:none; margin-bottom:5px;"><b><u>Version 5.3.0.0 - 30/04/2016</u></b><ul><li>Bugs fixed in import/export process.</li></ul></li><li style="list-style:none; margin-bottom:5px;"><b><u>Version 5.2.3.0 - 20/02/2016</u></b><ul><li>Bug fixed when importer create news options values.</li></ul></li></ul></div></div></form>
