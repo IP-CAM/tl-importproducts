@@ -4,6 +4,8 @@ admin/config.php
 
 !index.html
 
+
+/storage/
 storage/
 download/
 image/data/
