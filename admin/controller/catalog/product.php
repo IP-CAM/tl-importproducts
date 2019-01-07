@@ -22,8 +22,8 @@ class ControllerCatalogProduct extends Controller {
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
 
 
-			echo '<pre>' . var_export($this->request->post, true) . '</pre>';
-			die();
+			// echo '<pre>' . var_export($this->request->post, true) . '</pre>';
+			// die();
 
 			$this->model_catalog_product->addProduct($this->request->post);
 
