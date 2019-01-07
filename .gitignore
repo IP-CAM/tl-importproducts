@@ -6,6 +6,7 @@ admin/config.php
 
 
 /storage/
+/storage/cache/
 storage/
 download/
 image/data/
