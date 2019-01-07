@@ -27,8 +27,29 @@
                             <span class="label-{{ label }}"><b>{{ name }}</b></span>
                           {% endfor %}
                           {% if journal2.settings.get('product_grid_wishlist_icon_position') == 'image' and journal2.settings.get('product_grid_wishlist_icon_display') == 'icon' %}
-                            <div class="wishlist"><a onclick="addToWishList('{{ product.product_id }}');" class="hint--top" data-hint="{{ button_wishlist }}"><i class="wishlist-icon"></i><span class="button-wishlist-text">{{ button_wishlist }}</span></a></div>
-                            <div class="compare"><a onclick="addToCompare('{{ product.product_id }}');" class="hint--top" data-hint="{{ button_compare }}"><i class="compare-icon"></i><span class="button-compare-text">{{ button_compare }}</span></a></div>
+                            <div class="wishlist">
+                                <a onclick="addToWishList('{{ product.product_id }}');" class="hint--top" data-hint="{{ button_wishlist }}">
+                                    <i class="wishlist-icon"></i>
+                                    <span class="button-wishlist-text">{{ button_wishlist }}</span>
+                                </a>
+                            </div>
+
+                            {# modifico aca #}
+                            <div>
+                                {{ dump(product) }}
+                                {# {% for prod in product.attribute_groups|keys  %}
+                                    <li>{{ prod }}</li>
+                                {% endfor %} #}
+                            </div>
+
+
+
+                            <div class="compare">
+                                <a onclick="addToCompare('{{ product.product_id }}');" class="hint--top" data-hint="{{ button_compare }}">
+                                    <i class="compare-icon"></i>
+                                    <span class="button-compare-text">{{ button_compare }}</span>
+                                </a>
+                            </div>
                           {% endif %}
                         </div>
                       {% endif %}
@@ -70,8 +91,28 @@
                               <a onclick="addToCart('{{ product.product_id }}', '{{ product.minimum }}');" class="button hint--top" data-hint="{{ button_cart }}"><i class="button-left-icon"></i><span class="button-cart-text">{{ button_cart }}</span><i class="button-right-icon"></i></a>
                             </div>
                           {% endif %}
-                          <div class="wishlist"><a onclick="addToWishList('{{ product.product_id }}');" class="hint--top" data-hint="{{ button_wishlist }}"><i class="wishlist-icon"></i><span class="button-wishlist-text">{{ button_wishlist }}</span></a></div>
-                          <div class="compare"><a onclick="addToCompare('{{ product.product_id }}');" class="hint--top" data-hint="{{ button_compare }}"><i class="compare-icon"></i><span class="button-compare-text">{{ button_compare }}</span></a></div>
+                            <div class="wishlist">
+                                <a onclick="addToWishList('{{ product.product_id }}');" class="hint--top" data-hint="{{ button_wishlist }}">
+                                    <i class="wishlist-icon"></i>
+                                    <span class="button-wishlist-text">{{ button_wishlist }}</span>
+                                </a>
+                            </div>
+
+                            {# modifico aca #}
+                            <div>
+                                {% for prod in product.attribute_groups|keys  %}
+                                    <li>{{ prod }}</li>
+                                {% endfor %}
+                            </div>
+
+
+
+                            <div class="compare">
+                                <a onclick="addToCompare('{{ product.product_id }}');" class="hint--top" data-hint="{{ button_compare }}">
+                                    <i class="compare-icon"></i>
+                                    <span class="button-compare-text">{{ button_compare }}</span>
+                                </a>
+                            </div>
                         </div>
                       </div>
                     </div>

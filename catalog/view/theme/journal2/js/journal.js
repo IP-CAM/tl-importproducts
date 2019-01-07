@@ -24,8 +24,8 @@ Journal.init = function () {
         'left': '50%',
         'margin-left': '-' + $c.width() / 2 + 'px'
     });
-    $('.product-grid-item .image > a').prepend('<div class="p-over p-grid-over"> </div>');
-    $('.product-list-item .image > a').prepend('<div class="p-over p-list-over"> </div>');
+    $('.product-grid-item .image > a').prepend('<div class="p-over p-grid-over"> pepepep</div>');
+    $('.product-list-item .image > a').prepend('<div class="p-over p-list-over"> pepepepe</div>');
 
     /* */
     $('#top-modules .hide-on-mobile, #bottom-modules .hide-on-mobile').each(function () {

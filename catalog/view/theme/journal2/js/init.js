@@ -90,6 +90,12 @@ $('html[dir="rtl"] .journal-header-compact .mega-menu').css('right', -$('.journa
 }());
 
 $(window).load(function() {
+
+    $(".product-wrapper").mouseover(function() {
+      $( "#log" ).append( "<div>Handler for .mouseover() called.</div>" );
+    });
+
+
     $("img.lazy").lazy({
         bind: 'event',
         visibleOnly: false,
