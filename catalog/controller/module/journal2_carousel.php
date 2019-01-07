@@ -395,8 +395,48 @@ class ControllerModuleJournal2Carousel extends Controller {
                     }
                 }
 
+
+                // atributos del producto
+                $this->load->model('catalog/product');
+                $attributes = $this->model_catalog_product->getProductAttributes($product['product_id']);
+                if (isset($attributes[0]))
+                {
+                    foreach ($attributes[0]['attribute'] AS $k=>$atr)
+                    {
+                        if ($atr['name'] == 'Especificaciones')
+                        {
+                            $atrib['especificaciones'] = $atr['text'];
+
+                        } else if ($atr['name'] == 'Ancho:') {
+                            $atrib['ancho'] = $atr['text'];
+
+                        } else if ($atr['name'] == 'Rendimiento:') {
+                            $atrib['rendimiento'] = $atr['text'];
+
+                        } else if ($atr['name'] == 'Piezas de::') {
+                            $atrib['piezasde'] = $atr['text'];
+
+                        } else if ($atr['name'] == 'Peso:') {
+                            $atrib['peso'] = $atr['text'];
+
+                        } else {
+
+                        }
+                    }
+                }
+
+                if (isset($atrib)) {
+                    $prod_attributes = $atrib;
+                } else {
+                    $prod_attributes = array();
+                }
+
+                // fin de los atributos del producto
+
+
                 $product_data = array(
                     'product_id'    => $product['product_id'],
+                    'product_attributes'=> $prod_attributes,
                     'section_class' => $product_sections,
                     'classes'       => Journal2Utils::getProperty($section, 'section_type') === 'module' && Journal2Utils::getProperty($section, 'module_type') === 'specials' && Journal2Utils::getProperty($section, 'countdown_visibility', '0') == '1' ? 'countdown-on' : '',
                     'thumb'         => $image,

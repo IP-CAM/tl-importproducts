@@ -151,6 +151,7 @@
                             <switch-option key="none">OFF</switch-option>
                         </switch>
                     </span>
+                    <!-- tenemos que probar por acá configurar para que muestre al hacer over el mouse -->
                             <a href="#" target="_blank" class="journal-tip"></a>
                         </li>
                         <li>
