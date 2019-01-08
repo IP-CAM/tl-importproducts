@@ -1,3 +1,36 @@
+
+// codigo para hacer el over en el carrousel, mostrando atributos.
+$( document ).ready(function()
+{
+
+
+
+
+    /* hover on currency */
+    $('.product-wrapper .image').unbind('click').unbind('hoverIntent').hoverIntent(function () {
+        // $(this).find('ul').fadeIn(150);
+        console.log('pasaste mouse');
+    },  function () {
+        // $(this).find('ul').fadeOut(150);
+        console.log('sacaste el mouse');
+    });
+
+
+$(".box").hover(function () {
+    $(this).find('.box-hover').fadeIn(100);
+},
+function () {
+    $(this).find('.box-hover').fadeOut(100);
+});​
+
+
+
+
+});
+
+
+
+
 var Journal = {};
 
 Journal.isMobile = $('html').hasClass('mobile') || $('html').hasClass('tablet');
@@ -24,8 +57,8 @@ Journal.init = function () {
         'left': '50%',
         'margin-left': '-' + $c.width() / 2 + 'px'
     });
-    $('.product-grid-item .image > a').prepend('<div class="p-over p-grid-over"> pepepep</div>');
-    $('.product-list-item .image > a').prepend('<div class="p-over p-list-over"> pepepepe</div>');
+    $('.product-grid-item .image > a').prepend('<div class="p-over p-grid-over"></div>');
+    $('.product-list-item .image > a').prepend('<div class="p-over p-list-over"></div>');
 
     /* */
     $('#top-modules .hide-on-mobile, #bottom-modules .hide-on-mobile').each(function () {

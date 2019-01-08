@@ -145,13 +145,18 @@
                         </li>
                         <li>
                             <span class="module-create-title">Wishlist</span>
-                    <span class="module-create-option">
-                        <switch data-ng-model="settings.catalog_grid_carousel_wishlist">
-                            <switch-option key="inline-block">ON</switch-option>
-                            <switch-option key="none">OFF</switch-option>
-                        </switch>
-                    </span>
-                    <!-- tenemos que probar por acá configurar para que muestre al hacer over el mouse -->
+                            <span class="module-create-option">
+                                <switch data-ng-model="settings.catalog_grid_carousel_wishlist">
+                                    <switch-option key="inline-block">ON</switch-option>
+                                    <switch-option key="none">OFF</switch-option>
+                                </switch>
+                            </span>
+                            <span class="module-create-option">
+                                <switch data-ng-model="settings.catalog_grid_carousel_wishlist">
+                                    <switch-option key="inline-block">ON</switch-option>
+                                    <switch-option key="none">OFF</switch-option>
+                                </switch>
+                            </span>
                             <a href="#" target="_blank" class="journal-tip"></a>
                         </li>
                         <li>

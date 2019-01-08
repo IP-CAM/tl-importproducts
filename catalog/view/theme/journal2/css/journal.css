@@ -5,6 +5,23 @@
   Copyright (c) 2017 Digital Atelier
   https://www.journal-theme.com/
 */
+
+/*agregado enero/2019 para over en el carrousel*/
+
+/*.swiper.swiper-container.swiper-wrapper.product-grid-item.product-wrapper.image {
+  position: relative;
+  text-align: center;
+  color: white;
+}*/
+
+.prod_overdata {
+  position: absolute;
+  bottom: 8px;
+  left: 16px;
+
+}
+
+
 /******************************
 RESET
 *******************************/
