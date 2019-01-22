@@ -395,7 +395,6 @@ class ControllerModuleJournal2Carousel extends Controller {
                     }
                 }
 
-
                 // atributos del producto
                 $this->load->model('catalog/product');
                 $attributes = $this->model_catalog_product->getProductAttributes($product['product_id']);
@@ -413,11 +412,14 @@ class ControllerModuleJournal2Carousel extends Controller {
                         } else if ($atr['name'] == 'Rendimiento:') {
                             $atrib['rendimiento'] = $atr['text'];
 
-                        } else if ($atr['name'] == 'Piezas de::') {
+                        } else if ($atr['name'] == 'Piezas de:') {
                             $atrib['piezasde'] = $atr['text'];
 
                         } else if ($atr['name'] == 'Peso:') {
                             $atrib['peso'] = $atr['text'];
+
+                        } else if ($atr['name'] == 'Comp:') {
+                            $atrib['comp'] = $atr['text'];
 
                         } else {
 
@@ -430,8 +432,9 @@ class ControllerModuleJournal2Carousel extends Controller {
                 } else {
                     $prod_attributes = array();
                 }
-
                 // fin de los atributos del producto
+
+
 
 
                 $product_data = array(
