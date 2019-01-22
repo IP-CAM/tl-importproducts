@@ -27,6 +27,7 @@ class ControllerModuleJournal2BlogSearch extends Controller {
         $this->load->model('journal2/module');
         $this->load->model('journal2/blog');
 
+
         if (self::$CACHEABLE === null) {
             self::$CACHEABLE = (bool)$this->journal2->settings->get('config_system_settings.blog_search_cache');
         }

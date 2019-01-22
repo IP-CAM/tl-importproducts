@@ -1,6 +1,6 @@
 <?php
 class ControllerProductManufacturer extends Controller {
-	public function index() {
+	public function index() {z
 		$this->load->language('product/manufacturer');
 
 		$this->load->model('catalog/manufacturer');
@@ -316,7 +316,7 @@ class ControllerProductManufacturer extends Controller {
 			} else {
 				$this->document->addLink($this->url->link('product/manufacturer/info', 'manufacturer_id=' . $this->request->get['manufacturer_id'] . $url . '&page='. $page, true), 'canonical');
 			}
-			
+
 			if ($page > 1) {
 			    $this->document->addLink($this->url->link('product/manufacturer/info', 'manufacturer_id=' . $this->request->get['manufacturer_id'] . $url . '&page='. (($page - 2) ? '&page='. ($page - 1) : ''), true), 'prev');
 			}

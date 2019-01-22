@@ -26,6 +26,9 @@ class ControllerJournal2ProductTabs extends Controller {
     public function index() {
         if ($this->journal2->page->getType() !== 'product' && $this->journal2->page->getType() !== 'quickview') return;
 
+
+
+
         Journal2::startTimer('ProductTabs');
 
         $product_id = (int)$this->journal2->page->getId();

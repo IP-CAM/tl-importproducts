@@ -8,6 +8,7 @@ class ControllerModuleJournal2Accordion extends Controller {
     protected $data = array();
 
     protected function render() {
+
         if (version_compare(VERSION, '2.2', '<')) {
             $this->template = $this->config->get('config_template') . '/template/' . $this->template;
         }

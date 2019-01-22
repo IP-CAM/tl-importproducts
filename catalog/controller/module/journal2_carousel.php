@@ -34,6 +34,8 @@ class ControllerModuleJournal2Carousel extends Controller {
         $this->load->model('catalog/manufacturer');
         $this->load->model('tool/image');
 
+
+
         if (self::$CACHEABLE === null) {
             self::$CACHEABLE = (bool)$this->journal2->settings->get('config_system_settings.carousel_cache');
         }
