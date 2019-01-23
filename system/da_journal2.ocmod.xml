@@ -656,6 +656,45 @@
                 'date_end'       => $date_end,
             ]]></add>
         </operation>
+        <operation>
+            <search><![CDATA[$data['products'][] = array(]]></search>
+            <add position="before"><![CDATA[
+                // atributos del producto
+                $this->load->model('catalog/product');
+                $attributes = $this->model_catalog_product->getProductAttributes($result['product_id']);
+                if (isset($attributes[0]))
+                {
+                    foreach ($attributes[0]['attribute'] AS $k=>$atr)
+                    {
+                        if ($atr['name'] == 'Especificaciones')
+                        {
+                            $atrib['especificaciones'] = $atr['text'];
+                         } else if ($atr['name'] == 'Ancho:') {
+                            $atrib['ancho'] = $atr['text'];
+                         } else if ($atr['name'] == 'Rendimiento:') {
+                            $atrib['rendimiento'] = $atr['text'];
+                         } else if ($atr['name'] == 'Piezas de::') {
+                            $atrib['piezasde'] = $atr['text'];
+                         } else if ($atr['name'] == 'Peso:') {
+                            $atrib['peso'] = $atr['text'];
+                         } else {
+                         }
+                    }
+                }
+                 if (isset($atrib)) {
+                    $prod_attributes = $atrib;
+                } else {
+                    $prod_attributes = array();
+                }
+                // fin de los atributos del producto
+            ]]></add>
+        </operation>
+        <operation>
+            <search><![CDATA['product_id'  => $result['product_id'],]]></search>
+            <add position="after"><![CDATA[
+                'product_attributes'=> $prod_attributes,
+            ]]></add>
+        </operation>
     </file>
 
     <file path="catalog/controller/product/manufacturer.php">

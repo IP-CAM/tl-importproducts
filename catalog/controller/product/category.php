@@ -195,38 +195,10 @@ class ControllerProductCategory extends Controller {
 				}
 
 
-				// atributos del producto
-                $this->load->model('catalog/product');
-                $attributes = $this->model_catalog_product->getProductAttributes($result['product_id']);
-                if (isset($attributes[0]))
-                {
-                    foreach ($attributes[0]['attribute'] AS $k=>$atr)
-                    {
-                        if ($atr['name'] == 'Especificaciones')
-                        {
-                            $atrib['especificaciones'] = $atr['text'];
-                         } else if ($atr['name'] == 'Ancho:') {
-                            $atrib['ancho'] = $atr['text'];
-                         } else if ($atr['name'] == 'Rendimiento:') {
-                            $atrib['rendimiento'] = $atr['text'];
-                         } else if ($atr['name'] == 'Piezas de::') {
-                            $atrib['piezasde'] = $atr['text'];
-                         } else if ($atr['name'] == 'Peso:') {
-                            $atrib['peso'] = $atr['text'];
-                         } else {
-                         }
-                    }
-                }
-                 if (isset($atrib)) {
-                    $prod_attributes = $atrib;
-                } else {
-                    $prod_attributes = array();
-                }
-				// fin de los atributos del producto
+
 
 				$data['products'][] = array(
 					'product_id'  => $result['product_id'],
-					'product_attributes'=> $prod_attributes,
 					'thumb'       => $image,
 					'name'        => $result['name'],
 					'description' => utf8_substr(trim(strip_tags(html_entity_decode($result['description'], ENT_QUOTES, 'UTF-8'))), 0, $this->config->get('theme_' . $this->config->get('config_theme') . '_product_description_length')) . '..',
