@@ -404,40 +404,31 @@ class ControllerModuleJournal2Carousel extends Controller {
                 {
                     foreach ($attributes[0]['attribute'] AS $k=>$atr)
                     {
-                        if ($atr['name'] == 'Especificaciones')
-                        {
-                            $atrib['especificaciones'] = $atr['text'];
-
-                        } else if ($atr['name'] == 'Ancho:') {
+                        if ($atr['attribute_id'] == ATR_ANCHO) {
                             $atrib['ancho'] = $atr['text'];
 
-                        } else if ($atr['name'] == 'Rendimiento:') {
+                        } else if ($atr['attribute_id'] == ATR_REND) {
                             $atrib['rendimiento'] = $atr['text'];
 
-                        } else if ($atr['name'] == 'Piezas de:') {
+                        } else if ($atr['attribute_id'] == ATR_PIEZASDE) {
                             $atrib['piezasde'] = $atr['text'];
 
-                        } else if ($atr['name'] == 'Peso:') {
+                        } else if ($atr['attribute_id'] == ATR_PESO) {
                             $atrib['peso'] = $atr['text'];
 
-                        } else if ($atr['name'] == 'Comp:') {
+                        } else if ($atr['attribute_id'] == ATR_COMP) {
                             $atrib['comp'] = $atr['text'];
 
                         } else {
 
                         }
                     }
-                }
-
-                if (isset($atrib)) {
                     $prod_attributes = $atrib;
+                    unset($atrib);
                 } else {
                     $prod_attributes = array();
                 }
                 // fin de los atributos del producto
-
-
-
 
                 $product_data = array(
                     'product_id'    => $product['product_id'],

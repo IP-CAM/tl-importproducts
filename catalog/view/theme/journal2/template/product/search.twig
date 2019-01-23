@@ -1,3 +1,4 @@
+
 {{ header }}
 <div id="container" class="container j-container">
   <ul class="breadcrumb">
@@ -108,16 +109,11 @@
               <div class="product-thumb product-wrapper {% if product.labels and product.labels.outofstock %} outofstock {% endif %}">
                 <div class="image {% if journal2.settings.get('show_countdown', 'never') != 'never' and product.date_end %} has-countdown {% endif %}">
                   <a href="{{ product.href }}" {% if product.thumb2 %} class="has-second-image" style="background: url('{{ product.thumb2 }}') no-repeat" {% endif %}>
-                     {# <div class="prod_overdata" data-content='Ancho: {{ product.product_attributes.ancho }}&#xa;
+                     <div class="prod_overdata" data-content='Ancho: {{ product.product_attributes.ancho }}&#xa;
                                                         Rinde: {{ product.product_attributes.rendimiento }}&#xa;
                                                         Piezas de: {{ product.product_attributes.piezasde }}&#xa;
                                                         Peso: {{ product.product_attributes.peso }}&#xa;
-                                                        Composición: {{ product.product_attributes.comp }}&#xa;' > #}
-                      <div class="prod_overdata" data-content='Ancho: 1&#xa;
-                                                        Rinde: 80%&#xa;
-                                                        Piezas de: 80m&#xa;
-                                                        Peso: 100gr&#xa;
-                                                        Composición: Algodón&#xa;' >
+                                                        Composición: {{ product.product_attributes.comp }}&#xa;' >
                       <img class="lazy first-image" width="{{ journal2.settings.get('config_image_width') }}" height="{{ journal2.settings.get('config_image_height') }}" src="{{ journal2.settings.get('product_dummy_image') }}" data-src="{{ product.thumb }}" title="{{ product.name }}" alt="{{ product.name }}"/>
                     </div>
                   </a>
