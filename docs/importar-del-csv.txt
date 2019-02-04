@@ -11,10 +11,10 @@ delimitador de cadena "
 Y tildar solamente "Guardar contenido de celdas como se muestra"
 
 URL para importacion de productos.
-http://telas/admin/index.php?route=catalog/product/addproduct
+http://telas/admin/index.php?route=catalog/import/importProducts
 
 controlador en
-admin/controller/catalog/product.php   addproduct()
+admin/controller/catalog/product.php   importProducts()
 
 
 
