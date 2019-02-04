@@ -200,31 +200,18 @@ class  ControllerCatalogImport extends Controller
         return $data;
     }
 
+
     private function getImages( string $seo ): array
     {
-        $images =  [
-                    [
-                        ['image'] => 'data/telas/' . $seo . '-b.jpg',
-                        ['sort_order'] => 1
-                    ],
-                    [
-                        ['image'] => 'data/telas/' . $seo . '-c.jpg',
-                        ['sort_order'] => 2
-                    ],
-                    [
-                        ['image'] => 'data/telas/' . $seo . '-d.jpg',
-                        ['sort_order'] => 3
-                    ],
-                    [
-                        ['image'] => 'data/telas/' . $seo . '-e.jpg',
-                        ['sort_order'] => 4
-                    ],
+        return [
+                    [ "image" => 'data/telas' . $seo . '-b.jpg', "sort_order" => 1 ],
+                    [ "image" => 'data/telas' . $seo . '-c.jpg', "sort_order" => 2 ],
+                    [ "image" => 'data/telas' . $seo . '-d.jpg', "sort_order" => 3 ],
+                    [ "image" => 'data/telas' . $seo . '-e.jpg', "sort_order" => 4 ]
             ];
-
-echo '<strong>$images in line ' . __LINE__ . ' in filename ' . __FILE__ . '</strong> <pre>' . var_export($images, true) . '</pre>';
-
-        return $images;
     }
+
+
 
     private function getFirstImage( string $seo): string
     {
