@@ -3,6 +3,8 @@
 class  ControllerCatalogImport extends Controller
 {
 
+    private $img_extension = '.png';
+
     public function importProducts()
     {
 
@@ -11,22 +13,17 @@ class  ControllerCatalogImport extends Controller
         $this->load->language('catalog/product');
         $this->document->setTitle($this->language->get('heading_title'));
 
-        $products_csv = $this->getAllProductsFromCsv();
-
-        $products = $this->separateProductBySeo($products_csv);
-
-        // echo '<pre>' . var_export($products, true) . '</pre>';
+        $products_csv= $this->getAllProductsFromCsv();
 
 
+        $products    = $this->separateProductBySeo($products_csv);
 
         foreach ($products as $k => $prod)
         {
             $data = $this->getProductToInsert($prod);
-            echo '<strong>$data in line ' . __LINE__ . ' in filename ' . __FILE__ . '</strong> <pre>' . var_export($data, true) . '</pre>';
-            //$this->insertProduct($data);
+            $this->insertProduct($data);
         }
 
-        die('fin');
 
         echo 'Productos Insertados Correctamente . . .';
         exit(0);
@@ -43,7 +40,6 @@ class  ControllerCatalogImport extends Controller
         $this->document->setTitle($this->language->get('heading_title'));
         $this->load->model('catalog/product');
         $add_product = $this->model_catalog_product->addProduct($data);
-        var_dump($add_product);
         if ( isset($add_product) && is_numeric($add_product) && $add_product > 0) {
             return true;
         }
@@ -80,14 +76,47 @@ class  ControllerCatalogImport extends Controller
     // por ejemplo. Si un producto tiene 3 URL SEO, vamos a devolver tres productos identicos, pero con URL SEO diferentes.
     private function separateProductBySeo( Array $products): array
     {
+        $all_products = [];
         foreach ($products AS $k => $product)
         {
-            $url_seos = explode(",", $product[23]);
-            $all_products = $this->createNewProductsBySeo( $products[$k], $url_seos);
-
+            $url_seos           = $this->separateUrlsSeos($product);
+            $separate_products  = $this->createNewProductsBySeo( $products[$k], $url_seos);
+            $all_products       = $this->addProductsInArray($all_products, $separate_products);
         }
 
         return $all_products;
+    }
+
+    private function separateUrlsSeos(Array $product)
+    {
+        $url_seos = explode(",", $product[23]);
+        foreach ($url_seos AS $k=>$url)
+        {
+            if (strlen($url) < 4) {
+                unset($url_seos[$k]);
+            } else {
+                $url_seos[$k] = trim(str_replace('/','', $url));
+            }
+        }
+
+        return $url_seos;
+    }
+
+
+
+    private function addProductsInArray( Array $allproducts, Array $separate_products): array
+    {
+
+        end($allproducts);
+        $k = key($allproducts);
+
+        foreach ($separate_products AS $product)
+        {
+            $k++;
+            $allproducts[$k] = $product;
+        }
+
+        return $allproducts;
     }
 
 
@@ -204,10 +233,10 @@ class  ControllerCatalogImport extends Controller
     private function getImages( string $seo ): array
     {
         return [
-                    [ "image" => 'data/telas' . $seo . '-b.jpg', "sort_order" => 1 ],
-                    [ "image" => 'data/telas' . $seo . '-c.jpg', "sort_order" => 2 ],
-                    [ "image" => 'data/telas' . $seo . '-d.jpg', "sort_order" => 3 ],
-                    [ "image" => 'data/telas' . $seo . '-e.jpg', "sort_order" => 4 ]
+                    [ "image" => 'data/telas/' . $seo . '-b' . $this->img_extension, "sort_order" => 1 ],
+                    [ "image" => 'data/telas/' . $seo . '-c' . $this->img_extension, "sort_order" => 2 ],
+                    [ "image" => 'data/telas/' . $seo . '-d' . $this->img_extension, "sort_order" => 3 ],
+                    [ "image" => 'data/telas/' . $seo . '-e' . $this->img_extension, "sort_order" => 4 ]
             ];
     }
 
@@ -215,7 +244,7 @@ class  ControllerCatalogImport extends Controller
 
     private function getFirstImage( string $seo): string
     {
-        return trim('data/telas' . $seo . '-a.jpg');
+        return trim('data/telas/' . $seo . '-a' . $this->img_extension);
     }
 
 
