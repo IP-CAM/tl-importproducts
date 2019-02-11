@@ -5,6 +5,17 @@ class ControllerCatalogImportProductsCategories extends Controller
 
     private $img_extension = '.png';
 
+    private $name_ancho       = 'Ancho:';
+    private $id_ancho         = '29';
+    private $name_composicion = 'Comp:';
+    private $id_composicion   = '28';
+    private $name_peso        = 'Peso:';
+    private $id_peso          = '32';
+    private $name_piezasde    = 'Piezas de:';
+    private $id_piezasde      = '31';
+    private $name_rendimiento = 'Rendimiento:';
+    private $id_rendimiento   = '30';
+
 
     protected function getAllDataFromCsv( String $filename ): array
     {
@@ -137,11 +148,9 @@ class ControllerCatalogImportProductsCategories extends Controller
         $data["sort_order"]                  = "0";
         $data["manufacturer"]                = "";
         $data["manufacturer_id"]             = "0";
-        $data["category"]                    = [];
+        $data["category"]                    = ""; // lo pone siempre vacio
 
-        // por el momento harckodeo categorias.
-        // $data['product_category']             = self::set_categories($prod[18], $prod[1]);
-        $data['product_category']            = [];
+        $data['product_category']             = $this->set_categories( $prod[1], $prod[0], $prod[12], $prod[17] );
 
         $data['product_discount'][0]['customer_group_id'] = '1';
         $data['product_discount'][0]['quantity'] = '10';
@@ -165,13 +174,42 @@ class ControllerCatalogImportProductsCategories extends Controller
         $data['product_discount'][2]['date_start'] = '';
         $data['product_discount'][2]['date_end'] = '';
 
+        // atributos del producto
+        $data['product_attribute'][0]['name']           = $this->name_ancho;
+        $data['product_attribute'][0]['attribute_id']   = $this->id_ancho;
+        $data['product_attribute'][0]['product_attribute_description'][2]['text']   = $prod[2];
+        $data['product_attribute'][0]['product_attribute_description'][1]['text']   = $prod[2];
+
+
+        $data['product_attribute'][1]['name']           = $this->name_composicion;
+        $data['product_attribute'][1]['attribute_id']   = $this->id_composicion;
+        $data['product_attribute'][1]['product_attribute_description'][2]['text']   = $prod[10];
+        $data['product_attribute'][1]['product_attribute_description'][1]['text']   = $prod[10];
+
+
+        $data['product_attribute'][2]['name']           = $this->name_peso;
+        $data['product_attribute'][2]['attribute_id']   = $this->id_peso;
+        $data['product_attribute'][2]['product_attribute_description'][2]['text']   = $prod[16];
+        $data['product_attribute'][2]['product_attribute_description'][1]['text']   = $prod[16];
+
+
+        $data['product_attribute'][3]['name']           = $this->name_piezasde;
+        $data['product_attribute'][3]['attribute_id']   = $this->id_piezasde;
+        $data['product_attribute'][3]['product_attribute_description'][2]['text']   = $prod[9];
+        $data['product_attribute'][3]['product_attribute_description'][1]['text']   = $prod[9];
+
+
+        $data['product_attribute'][4]['name']           = $this->name_rendimiento;
+        $data['product_attribute'][4]['attribute_id']   = $this->id_rendimiento;
+        $data['product_attribute'][4]['product_attribute_description'][2]['text']   = '80%';
+        $data['product_attribute'][4]['product_attribute_description'][1]['text']   = '80%';
+
 
         $data["filter"]                      = "";
         $data["product_store"][0]            = "0";
         $data["download"]                    = "";
         $data["related"]                     = "";
         $data["option"]                      = "";
-        // $data["image"]                       = "data/telas/" . $prod[18];
         $data["image"]                      = $this->getFirstImage($prod[23]);
         $data["points"]                      = "";
         $data["product_reward"][1]["points"] = "0";
@@ -180,8 +218,6 @@ class ControllerCatalogImportProductsCategories extends Controller
         $data["product_layout"][0]           = "";
 
         $data['product_image']              = $this->getImages($prod[23]);
-
-
 
         return $data;
     }
@@ -284,42 +320,26 @@ class ControllerCatalogImportProductsCategories extends Controller
         return (int)$width;
     }
 
-    // nos devuelve el array con el id de las categorias.
-    static function set_categories( $categories, $name_product )
+    // nos devuelve el array con el id de las categorias. Si no encuentra la categoria avisa con un Warning en pantalla.
+    private function set_categories( String $name_product,  String $tela_name, String $usos, String $main_categories ): Array
     {
-        // debajo como pasar el array de categoria
+        $all_categories = $tela_name . ', ' . $usos . ',' . $main_categories;
+        $categories     = explode(',', $all_categories );
 
-        $categories = trim($categories);
+        $this->load->model('catalog/category');
+        $id_categories = [];
 
-        $keys_cat['blanco']           = 172;
-        $keys_cat['moda']             = 59;
-        $keys_cat['ofertas']          = 173;
-        $keys_cat['telas-por-nombre'] = 170;
-        $keys_cat['telas-por-uso']    = 171;
-
-        $categories_words = explode(",", $categories);
-
-        foreach ($categories_words AS $name_cat)
+        foreach ($categories AS $category)
         {
-            $name_cat = trim(strtolower($name_cat));
-            if ( $name_cat == 'blanco') {
-                $add_category[] = $keys_cat['blanco'];
-            } else if ( $name_cat == 'moda' ) {
-                $add_category[] = $keys_cat['moda'];
-            } else if ( $name_cat == 'ofertas') {
-                $add_category[] = $keys_cat['ofertas'];
-            } else if ( $name_cat == 'telas por nombre' ) {
-                $add_category[] = $keys_cat['telas-por-nombre'];
-            } else if ( $name_cat == 'telas por uso' ) {
-                $add_category[] = $keys_cat['telas-por-uso'];
+            $get_category = $this->model_catalog_category->getCategories( ['filter_name'=>strtolower(trim($category))] );
+            if (isset($get_category[0]['category_id'])) {
+                $id_categories[] = $get_category[0]['category_id'];
             } else {
-                echo 'ERROR FATAL, no detecta la categoria ' . $name_cat .  ' en producto ' . $name_product;
-                exit(1);
+                echo 'WARNING: Producto ' . $name_product . ' tiene seteada categoria ' . $category . ' y no fue encontrada dentro de las categorias . . . <br />';
             }
         }
 
-        return ($add_category);
-
+        return $id_categories;
     }
 
 
