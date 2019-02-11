@@ -9,10 +9,18 @@ class  ControllerCatalogImport extends ControllerCatalogImportProductsCategories
     // IDs de las categorias PADRES
     private $id_usos    = 195;
     private $id_telas   = 170;
-    private $id_blanco  = 196;
-    private $id_moda    = 59;
-    private $id_ofertas = 173;
 
+
+
+    public function importAll():bool
+    {
+        if ($this->importCategories() && $this->importProducts()) {
+            echo '<br />Categorías y Productos cargados con éxitos, revisar si hay algún Warning y resolverlo si se puede.<br />';
+            return true;
+        }
+
+        throw new \Exception('ERROR FATAL. Las salidas dieron con errores. Revisar. ');
+    }
 
     public function importProducts()
     {
@@ -31,10 +39,7 @@ class  ControllerCatalogImport extends ControllerCatalogImportProductsCategories
             $this->insertProduct($data);
         }
 
-
         echo 'Productos Insertados Correctamente . . .';
-        exit(0);
-
         return true;
 
     }
@@ -76,7 +81,6 @@ class  ControllerCatalogImport extends ControllerCatalogImportProductsCategories
         echo 'Categorias Usos de Telas insertadas con éxito . . .<br />';
 
         return true;
-        exit(0);
     }
 
     private function insertCategory($data): bool
