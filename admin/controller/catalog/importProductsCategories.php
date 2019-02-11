@@ -106,21 +106,6 @@ class ControllerCatalogImportProductsCategories extends Controller
 
     protected function getProductToInsert( Array $prod): array
     {
-        // idioma español
-        $data["product_description"][2]["name"]         = $prod[1];
-        $data["product_description"][2]["description"]  = $this->getProductDescription();
-        $data["product_description"][2]["meta_title"]   = $prod[13];
-        $data["product_description"][2]["meta_description"]= $prod[14];
-        $data["product_description"][2]["meta_keyword"] = $prod[15];
-        $data["product_description"][2]["tag"]          = "";
-
-        // idioma ingles, lo agregamos para que no haya errores si editamos manualmente
-        $data["product_description"][1]["name"]         = $prod[1];
-        $data["product_description"][1]["description"]  = $this->getProductDescription();
-        $data["product_description"][1]["meta_title"]   = $prod[13];
-        $data["product_description"][1]["meta_description"]= $prod[14];
-        $data["product_description"][1]["meta_keyword"] = $prod[15];
-        $data["product_description"][1]["tag"]          = "";
 
         $data["model"]                       = $prod[1];
         $data["sku"]                         = "";
@@ -174,6 +159,30 @@ class ControllerCatalogImportProductsCategories extends Controller
         $data['product_discount'][2]['date_start'] = '';
         $data['product_discount'][2]['date_end'] = '';
 
+        $precios[0] = $data['product_discount'][2]['price'];
+        $precios[1] = $data['product_discount'][1]['price'];
+        $precios[2] = $data['product_discount'][0]['price'];
+        $usos       = $prod[12];
+
+        // idioma español
+        $data["product_description"][2]["name"]         = $prod[1];
+        $data["product_description"][2]["description"]  = $this->getProductDescription( $precios, $usos);
+        $data["product_description"][2]["meta_title"]   = $prod[13];
+        $data["product_description"][2]["meta_description"]= $prod[14];
+        $data["product_description"][2]["meta_keyword"] = $prod[15];
+        $data["product_description"][2]["tag"]          = "";
+
+        // idioma ingles, lo agregamos para que no haya errores si editamos manualmente
+        $data["product_description"][1]["name"]         = $prod[1];
+        $data["product_description"][1]["description"]  = $this->getProductDescription( $precios, $usos);
+        $data["product_description"][1]["meta_title"]   = $prod[13];
+        $data["product_description"][1]["meta_description"]= $prod[14];
+        $data["product_description"][1]["meta_keyword"] = $prod[15];
+        $data["product_description"][1]["tag"]          = "";
+
+
+
+
         // atributos del producto
         $data['product_attribute'][0]['name']           = $this->name_ancho;
         $data['product_attribute'][0]['attribute_id']   = $this->id_ancho;
@@ -222,7 +231,7 @@ class ControllerCatalogImportProductsCategories extends Controller
         return $data;
     }
 
-    private function getProductDescription()
+    private function getProductDescription( Array $precios, String $usos ):string
     {
         return '<div class="product-info-container-am ">
                           <div class="product-label-am">
@@ -230,19 +239,19 @@ class ControllerCatalogImportProductsCategories extends Controller
                               <div class="price-box-am ">
                                 <div class="price-title-am"> <span>Por menor<br>
                                   <span class="price-subtitle-am desktop-am">A partir de 1 kilo</span> <span class="price-subtitle-am mobile-am">Por 1 kg.</span> </span> </div>
-                                <div class="price-container-regular-am "> <span class="regular-price-am"> <span class="price-am">$759,00</span> </span> </div>
+                                <div class="price-container-regular-am "> <span class="regular-price-am"> <span class="price-am">$' . $precios[0] . '</span> </span> </div>
                                 <br clear="all">
                                 <ul class="tiered-prices-list-am">
                                   <li>
                                     <div class="price-title-am"> <span>Por mayor<br>
                                       <span data-dialog="El precio por mayor se aplica a la compra de 5 kilos del mismo color o diseño" class="tooltip-info-am"><span></span></span> <span class="price-subtitle-am desktop-am">A partir de 5 kilos </span> <span class="price-subtitle-am mobile-am">Más de 5 kgs. </span> </span> </div>
-                                    <div class="price-container-tiered-am"> <span class="price-am">$649,00</span> </div>
+                                    <div class="price-container-tiered-am"> <span class="price-am">$' . $precios[1] . '</span> </div>
                                     <br clear="all">
                                   </li>
                                   <li>
                                     <div class="price-title-am"> <span>Por pieza<br>
                                       <span data-dialog="El precio por pieza se aplica a cantidades múltiplos de 20. - Ej.: 20, 40, 60, 80, etc." class="tooltip-info-am"><span></span></span> <span class="price-subtitle-am desktop-am">Piezas de 20 kilos </span> <span class="price-subtitle-am mobile-am">Pza. de 20 kgs. </span> </span> </div>
-                                    <div class="price-container-tiered-am"> <span class="price-am">$529,00</span> </div>
+                                    <div class="price-container-tiered-am"> <span class="price-am">$' . $precios[2] . '</span> </div>
                                     <br clear="all">
                                   </li>
                                 </ul>
@@ -255,7 +264,7 @@ class ControllerCatalogImportProductsCategories extends Controller
                             <h4><strong>Usos</strong></h4>
                             <div class="blockquote-am">
                               <div class="inside-am">
-                                <p>Vestidos, remeras, soleros</p>
+                                <p>' . $usos . '</p>
                               </div>
                             </div>
                           </div>
