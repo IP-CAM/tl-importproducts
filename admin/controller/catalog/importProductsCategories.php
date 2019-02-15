@@ -16,6 +16,9 @@ class ControllerCatalogImportProductsCategories extends Controller
     private $name_rendimiento = 'Rendimiento:';
     private $id_rendimiento   = '30';
 
+    // IDs de las categorias PADRES
+    private $id_usos    = 195;
+    private $id_telas   = 170;
 
     protected function getAllDataFromCsv( String $filename ): array
     {
@@ -272,31 +275,46 @@ class ControllerCatalogImportProductsCategories extends Controller
     }
 
 
-    protected function getCategoryToInsert( Array $tela, int $parentid = 0 ): array
+    protected function getCategoryToInsert( string $type = 'Uso', string $name): array
     {
-        $data['category_description'][2]['name']            = $tela[0];
-        $data['category_description'][2]['description']     = $tela[1];
-        $data['category_description'][2]['meta_title']      = $tela[2];
-        $data['category_description'][2]['meta_description']= $tela[3];
-        $data['category_description'][2]['meta_keyword']    = $tela[4];
-        $data['category_description'][1]['name']            = $tela[0];
-        $data['category_description'][1]['description']     = $tela[1];
-        $data['category_description'][1]['meta_title']      = $tela[2];
-        $data['category_description'][1]['meta_description']= $tela[3];
-        $data['category_description'][1]['meta_keyword']    = $tela[4];
+        $data['parent_id'] = $this->id_usos;
+        if ( $type == 'Tela') {
+            $data['parent_id']  = $this->id_telas;
+        }
+        $data['category_description'][2]['name']            = $name;
+        $data['category_description'][2]['description']     = '';
+        $data['category_description'][2]['meta_title']      = $type . ' ' . $name;
+        $data['category_description'][2]['meta_description']= $type . ' ' . $name;
+        $data['category_description'][2]['meta_keyword']    = $type . ', ' . $name;
+        $data['category_description'][1]['name']            = $name;
+        $data['category_description'][1]['description']     = '';
+        $data['category_description'][1]['meta_title']      = $type . ' ' . $name;
+        $data['category_description'][1]['meta_description']= $type . ' ' . $name;
+        $data['category_description'][1]['meta_keyword']    = $type . ', ' . $name;
         $data['path']       = '';
-        $data['parent_id']  = $parentid;
         $data['filter']     =  '';
         $data['category_store'][0]  = '0';
-        $data['image']      = 'data/telas/' . $tela[5] . $this->img_extension;
+        $data['image']      = 'data/telas/' . strtolower(trim($type)) . '-' . strtolower(trim($this->seoUrl($name))) . $this->img_extension;
         $data['column']     = '';
         $data['sort_order'] = '0';
         $data['status']     = '1' ;
-        $data['category_seo_url'][0][2] = $tela[6];
-        $data['category_seo_url'][0][1] = $tela[6] . '-en';
+        $data['category_seo_url'][0][2] = strtolower(trim($this->seoUrl($name)));
+        $data['category_seo_url'][0][1] = strtolower(trim($this->seoUrl($name))) . '-en';
         $data['category_layout'][0] = '';
 
         return $data;
+    }
+
+    private function seoUrl( $string, $separator = '-' )
+    {
+        $accents_regex = '~&([a-z]{1,2})(?:acute|cedil|circ|grave|lig|orn|ring|slash|th|tilde|uml);~i';
+        $special_cases = array( '&' => 'and', "'" => '');
+        $string = mb_strtolower( trim( $string ), 'UTF-8' );
+        $string = str_replace( array_keys($special_cases), array_values( $special_cases), $string );
+        $string = preg_replace( $accents_regex, '$1', htmlentities( $string, ENT_QUOTES, 'UTF-8' ) );
+        $string = preg_replace("/[^a-z0-9]/u", "$separator", $string);
+        $string = preg_replace("/[$separator]+/u", "$separator", $string);
+        return $string;
     }
 
     protected function getImages( string $seo ): array
@@ -329,7 +347,7 @@ class ControllerCatalogImportProductsCategories extends Controller
         return (int)$width;
     }
 
-    // nos devuelve el array con el id de las categorias. Si no encuentra la categoria avisa con un Warning en pantalla.
+    //nos devuelve el array con el id de las categorias. Si no encuentra la categoria avisa con un Warning en pantalla.
     private function set_categories( String $name_product,  String $tela_name, String $usos, String $main_categories ): Array
     {
         $all_categories = $tela_name . ', ' . $usos . ',' . $main_categories;
@@ -351,6 +369,51 @@ class ControllerCatalogImportProductsCategories extends Controller
         return $id_categories;
     }
 
+
+    protected function selectDataReferCategorieas( Array $product ):array
+    {
+
+        return [    'tela' => ucfirst(strtolower(trim($product[0]))),
+                    'usos' => $this->separateUsos( $product[12] )
+                ];
+    }
+
+    private function separateUsos( string $usos ):array
+    {
+        $arr_usos = explode(',', $usos);
+
+        if ( count($arr_usos) == 0) {
+            return [];
+        }
+
+        $responseUsos = [];
+        foreach ($arr_usos AS $uso)
+        {
+            if( strlen($uso) > 3 ) {
+                $uso = ucfirst(str_replace(',' , '' , trim($uso)));
+                $responseUsos[] = $uso;
+            }
+        }
+        return $responseUsos;
+    }
+
+    protected function notExistCategory( string $name):bool
+    {
+        $this->load->model('catalog/category');
+        $get_category = $this->model_catalog_category->getCategories( ['filter_name'=>strtolower(trim($name))] );
+        if (isset($get_category[0]['category_id'])) {
+            return false;
+        }
+        return true;
+    }
+
+    protected function checkIfExistImage( Array $data):void
+    {
+        if (!file_exists(DIR_IMAGE . $data['image'])) {
+            echo 'Imagen ' . $data['image'] . ' no existe!<br />';
+        }
+        return;
+    }
 
 
 }
