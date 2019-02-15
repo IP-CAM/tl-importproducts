@@ -17,15 +17,20 @@ class ControllerCatalogImportProductsCategories extends Controller
     private $id_rendimiento   = '30';
 
     // IDs de las categorias PADRES
-    private $id_usos    = 195;
+    // private $id_usos    = 195;
+    // private $id_telas   = 170;
+
+    // para testing en telasunitex.com.ar/telas_testing
+    private $id_usos    = 171;
     private $id_telas   = 170;
+
 
     protected function getAllDataFromCsv( String $filename ): array
     {
         // paso el .csv a un array
         $products = array();
         $item = 0;
-        if (($handle = fopen('/var/www/html/telas/docs/' . $filename, "r")) !== FALSE)
+        if (($handle = fopen(DIR_APPLICATION . '../docs/' . $filename, "r")) !== FALSE)
         {
             while (($data = fgetcsv($handle, 1000, ",")) !== FALSE)
             {
